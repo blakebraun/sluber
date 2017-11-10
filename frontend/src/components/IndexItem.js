@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ItemService from './ItemService';
 import axios from 'axios';
 import TableRow from './TableRow';
+import {Link} from 'react-router-dom';
 
 class IndexItem extends Component {
 
@@ -31,11 +32,9 @@ class IndexItem extends Component {
     render() {
        return(
               <div className="container">
-		   		<a href="/add-item">Add Item</a>
                 <table className="table table=striped">
                     <thead>
                         <tr>
-                            <td>No.</td>
                             <td>Item</td>
                         </tr>
                     </thead>
@@ -43,6 +42,9 @@ class IndexItem extends Component {
                         {this.tabRow()}
                     </tbody>
                 </table>
+				<div align="center">
+						<Link to={"/add-item"} className="btn btn-primary">Add Item</Link>
+				</div>
               </div>
         );
     }

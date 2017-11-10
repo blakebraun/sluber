@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ItemService from './ItemService';
+import {Link} from 'react-router-dom';
 
 class AddItem extends Component {
 
@@ -24,7 +25,7 @@ class AddItem extends Component {
 
     render(){
         return(
-                <div className="container">
+                <div className="container" padding="5">
                     <form onSubmit={this.handleSubmit}>
                         <label>
                             Add Item:
@@ -32,7 +33,9 @@ class AddItem extends Component {
                         </label><br/>
                         <input type="submit" value="Submit" className="btn btn-primary"/>
                     </form>
-                </div>
+							<br/>
+					<Link to={"/index"} className="btn btn-primary">Back to List</Link>
+				</div>
         );
     }
 }
