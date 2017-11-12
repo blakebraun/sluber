@@ -35,7 +35,15 @@ class IndexItem extends Component {
                 <table className="table table=striped">
                     <thead>
                         <tr>
-                            <td>Item</td>
+                            <td>Name</td>
+                            <td>Banner</td>
+                            <td>Phone Number</td>
+                            <td>Email</td>
+                            <td>Start Location</td>
+                            <td>End Location</td>
+                            <td>Time Received</td>
+                            <td>Time Cleared</td>
+                            <td>Unit Dispatched</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,7 +51,7 @@ class IndexItem extends Component {
                     </tbody>
                 </table>
 				<div align="center">
-						<Link to={"/add-item"} className="btn btn-primary">Add Item</Link>
+						<Link to={"/add-item"} className="btn btn-primary">Add Ride</Link>
 				</div>
               </div>
         );

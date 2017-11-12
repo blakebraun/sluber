@@ -37,7 +37,7 @@ class EditItem extends Component {
                 <div className="container">
                     <form onSubmit={this.handleSubmit}>
                         <label>
-                            Edit Item:
+                            Edit Name:
                             <input type="text" value={this.state.value.item} onChange={this.handleChange} className="form-control"/>
                         </label><br />
                         <input type="submit" value="Update" className="btn btn-primary"/>

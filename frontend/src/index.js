@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import {BrowserRouter as Router,Route} from 'react-router-dom';
 
-import App from './App';
 import AddItem from './components/AddItem';
 import IndexItem from './components/IndexItem';
 import EditItem from './components/EditItem';

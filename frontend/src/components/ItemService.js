@@ -4,7 +4,12 @@ class ItemService{
 
     sendData(data) {
         axios.post('http://localhost:4200/items/add/post',{
-                item:data
+                name:data.name,
+                banner:data.banner,
+                phone:data.phone,
+                email: data.email,
+                pickup: data.pickup,
+                dropoff: data.dropoff
         })
         .then(res => this.setState({items: res.data}))
         .catch(err => console.log(err))
