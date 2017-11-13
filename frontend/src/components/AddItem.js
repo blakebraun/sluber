@@ -6,6 +6,7 @@ class AddItem extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {pickup:"BSC", dropoff:"BSC"};
         this.addItemService = new ItemService();
 
@@ -56,7 +57,8 @@ class AddItem extends Component {
                                     <option value="Reinert">Reinert</option>
                                     <option value="Spring">Spring</option>
                                 </select>
-                        </label><br/>
+                        </label>
+                        <br/>
                         <input type="submit" value="Submit" className="btn btn-primary"/>
                     </form>
 							<br/>

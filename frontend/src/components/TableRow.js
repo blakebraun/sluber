@@ -17,12 +17,13 @@ class TableRow extends Component {
     }
 
     render(){
+        console.log(this.props.obj.received);
         return(
                 <tr>
                     <td>{this.props.obj.name}</td>
                     <td>{this.props.obj.banner}</td>
                     <td>{this.props.obj.phone}</td>
-                    <td>{this.props.obj.email}</td>
+                    <td><a href={"mailto:"+ this.props.obj.email}>{this.props.obj.email}</a></td>
                     <td>{this.props.obj.pickup}</td>
                     <td>{this.props.obj.dropoff}</td>
                     <td>11:00 PM</td>

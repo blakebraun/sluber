@@ -19,7 +19,7 @@ var Item = new Schema({
     },
     dropoff:{
         type: String
-    }
+    },
 },{
     collection: 'items'
 });

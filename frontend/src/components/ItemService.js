@@ -16,8 +16,13 @@ class ItemService{
     }
 
     updateData(data, id){
-        axios.post('http://localhost:4200/items/update/' +id, {
-                item: data
+        axios.post('http://localhost:4200/items/update/'+id, {
+            name:data.name,
+            banner:data.banner,
+            phone:data.phone,
+            email: data.email,
+            pickup: data.pickup,
+            dropoff: data.dropoff
         })
         .then(res => this.setState({ items:res.data}))
         .catch(err => console.log(err))

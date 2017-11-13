@@ -38,7 +38,12 @@ itemRouter.route('/update/:id').post(function(req,res){
         if (!item)
             return next(new Error('Could not load Document'));
         else {
-            item.item = req.body.item;
+            item.name = req.body.name;
+            item.banner = req.body.banner;
+            item.phone = req.body.phone;
+            item.email = req.body.email;
+            item.pickup = req.body.pickup;
+            item.dropoff = req.body.dropoff;
 
             item.save().then(item => {
                 res.json('Update complete');
