@@ -7,7 +7,9 @@ class AddItem extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {pickup:"BSC", dropoff:"BSC"};
+        let now = Date.now();
+
+        this.state = {pickup:"BSC", dropoff:"BSC", received:now};
         this.addItemService = new ItemService();
 
         this.handleInputChange = this.handleInputChange.bind(this);

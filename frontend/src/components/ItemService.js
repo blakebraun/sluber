@@ -9,7 +9,8 @@ class ItemService{
                 phone:data.phone,
                 email: data.email,
                 pickup: data.pickup,
-                dropoff: data.dropoff
+                dropoff: data.dropoff,
+                received: data.received,
         })
         .then(res => this.setState({items: res.data}))
         .catch(err => console.log(err))
@@ -22,7 +23,8 @@ class ItemService{
             phone:data.phone,
             email: data.email,
             pickup: data.pickup,
-            dropoff: data.dropoff
+            dropoff: data.dropoff,
+            dispatched: data.dispatched
         })
         .then(res => this.setState({ items:res.data}))
         .catch(err => console.log(err))
