@@ -44,6 +44,7 @@ itemRouter.route('/update/:id').post(function(req,res){
             item.email = req.body.email;
             item.pickup = req.body.pickup;
             item.dropoff = req.body.dropoff;
+            item.dispatched = req.body.dispatched;
 
             item.save().then(item => {
                 res.json('Update complete');

@@ -20,6 +20,12 @@ var Item = new Schema({
     dropoff:{
         type: String
     },
+    received:{
+        type: Date
+    },
+    dispatched:{
+        type: String
+    }
 },{
     collection: 'items'
 });
