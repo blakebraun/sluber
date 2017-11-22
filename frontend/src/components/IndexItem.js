@@ -31,18 +31,21 @@ class IndexItem extends Component {
 
     render() {
        return(
-              <div className="container">
+           <div>
+            <img src="/img/dispatcher.png" alt="SLUber Dispatcher Console" height="100px" />
+               <Link to={"/add-item"} className="add-button" style={{color: 'white', textDecoration:'none'}}>Add Ride</Link>
+               <hr />
+               <div className="container">
                 <table className="table table=striped">
                     <thead>
                         <tr>
+                            <td>Time Received</td>
                             <td>Name</td>
                             <td>Banner</td>
                             <td>Phone Number</td>
                             <td>Email</td>
                             <td>Start Location</td>
                             <td>End Location</td>
-                            <td>Time Received</td>
-                            <td>Time Cleared</td>
                             <td>Unit Dispatched</td>
                         </tr>
                     </thead>
@@ -50,10 +53,8 @@ class IndexItem extends Component {
                         {this.tabRow()}
                     </tbody>
                 </table>
-				<div align="center">
-						<Link to={"/add-item"} className="btn btn-primary">Add Ride</Link>
-				</div>
               </div>
+           </div>
         );
     }
 }

@@ -9,6 +9,7 @@ class EditItem extends Component {
         this.addItemService = new ItemService();
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.validateForm = this.validateForm.bind(this);
         this.state={};
     }
 
@@ -29,6 +30,32 @@ class EditItem extends Component {
         })
     }
 
+    validateForm() {
+        let bannerPattern = new RegExp("00[0-9]{7}");
+        let phonePattern = new RegExp("[0-9]{10}");
+        let emailPattern = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+
+        if(!bannerPattern.test(this.state.banner)){
+            alert("Please enter a valid banner ID.");
+            return false;
+        }
+        else if(!phonePattern.test(this.state.phone)){
+            alert("Please enter a valid ten digit phone number.");
+            return false;
+        }
+        else if(!emailPattern.test(this.state.email)){
+            alert("Please enter a valid email address.");
+            return false;
+        }
+        else if(this.state.pickup === this.state.dropoff){
+            alert("Pickup and dropoff locations may not be the same.")
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
     handleInputChange(event){
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -39,8 +66,10 @@ class EditItem extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.addItemService.updateData(this.state, this.props.match.params.id);
-        this.props.history.push('/index');
+        if(this.validateForm()) {
+            this.addItemService.updateData(this.state, this.props.match.params.id);
+            this.props.history.push('/index');
+        }
     }
 
     render() {

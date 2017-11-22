@@ -12,22 +12,25 @@ class TableRow extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.addItemService.deleteData(this.props.obj._id);
-		window.location.reload();
+        var del = window.confirm("Are you sure you want to delete this ride?");
+        if(del){
+            this.addItemService.deleteData(this.props.obj._id);
+            window.location.reload();
+
+        }
     }
 
     render(){
         console.log(this.props.obj.received);
         return(
                 <tr>
+                    <td>11:00 PM</td>
                     <td>{this.props.obj.name}</td>
                     <td>{this.props.obj.banner}</td>
                     <td>{this.props.obj.phone}</td>
                     <td><a href={"mailto:"+ this.props.obj.email}>{this.props.obj.email}</a></td>
                     <td>{this.props.obj.pickup}</td>
                     <td>{this.props.obj.dropoff}</td>
-                    <td>11:00 PM</td>
-                    <td>11:15 PM</td>
                     <td>001</td>
                     <td>
                         <Link to={"/edit/"+this.props.obj._id} className="btn btn-primary">Edit</Link>
