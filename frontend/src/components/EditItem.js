@@ -22,7 +22,8 @@ class EditItem extends Component {
                 phone:response.data.phone,
                 email: response.data.email,
                 pickup: response.data.pickup,
-                dropoff: response.data.dropoff
+                dropoff: response.data.dropoff,
+                dispatched: response.data.dispatched,
             });
         })
         .catch(function(error){
@@ -34,6 +35,7 @@ class EditItem extends Component {
         let bannerPattern = new RegExp("00[0-9]{7}");
         let phonePattern = new RegExp("[0-9]{10}");
         let emailPattern = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+        let dispatchedPattern = new RegExp("[0-9]{3}");
 
         if(!bannerPattern.test(this.state.banner)){
             alert("Please enter a valid banner ID.");
@@ -48,7 +50,11 @@ class EditItem extends Component {
             return false;
         }
         else if(this.state.pickup === this.state.dropoff){
-            alert("Pickup and dropoff locations may not be the same.")
+            alert("Pickup and dropoff locations may not be the same.");
+            return false;
+        }
+        else if(!dispatchedPattern.test(this.state.dispatched) && this.state.dispatched.length !== 0){
+            alert("Unit must be 3 numbers long.");
             return false;
         }
         else{
@@ -73,7 +79,6 @@ class EditItem extends Component {
     }
 
     render() {
-        console.log('state', this.state);
         return(
                 <div className="container">
                     <form onSubmit={this.handleSubmit}>
@@ -102,6 +107,8 @@ class EditItem extends Component {
                                 <option value="Reinert">Reinert</option>
                                 <option value="Spring">Spring</option>
                             </select>
+                            Unit Dispatched:
+                            <input name="dispatched" type="text" value={this.state.dispatched} onChange={this.handleInputChange} className="form-control" />
                         </label><br />
                         <input type="submit" value="Update" className="btn btn-primary"/>
                      </form>
