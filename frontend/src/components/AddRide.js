@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import ItemService from './ItemService';
+import RideService from './RideService';
 import {Link} from 'react-router-dom';
 
-class AddItem extends Component {
+class AddRide extends Component {
 
     constructor(props) {
         super(props);
@@ -10,7 +10,7 @@ class AddItem extends Component {
         let now = Date.now();
 
         this.state = {pickup:"BSC", dropoff:"BSC", received:now};
-        this.addItemService = new ItemService();
+        this.addRideService = new RideService();
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -54,7 +54,7 @@ class AddItem extends Component {
     handleSubmit(event) {
         event.preventDefault();
         if(this.validateForm()) {
-            this.addItemService.sendData(this.state);
+            this.addRideService.sendData(this.state);
             this.props.history.push('/index');
         }
     }
@@ -99,4 +99,4 @@ class AddItem extends Component {
     }
 }
 
-export default AddItem;
+export default AddRide;

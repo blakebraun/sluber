@@ -1,21 +1,21 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import ItemService from './ItemService';
+import RideService from './RideService';
 
 class TableRow extends Component {
 
     constructor(props){
         super(props);
-        this.addItemService = new ItemService();
+        this.addRideService = new RideService();
         this.handleSubmit = this.handleSubmit.bind(this);
         this.formatTime = this.formatTime.bind(this);
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        var del = window.confirm("Are you sure you want to delete this ride?");
+        let del = window.confirm("Are you sure you want to delete this ride?");
         if(del){
-            this.addItemService.deleteData(this.props.obj._id);
+            this.addRideService.deleteData(this.props.obj._id);
             window.location.reload();
 
         }
@@ -23,6 +23,8 @@ class TableRow extends Component {
 
     formatTime(){
         let received = new Date(this.props.obj.received);
+        let month = received.getMonth() + 1;
+        let day = received.getDate();
         let hours = received.getHours();
         let minutes = received.getMinutes();
         let m;
@@ -42,7 +44,7 @@ class TableRow extends Component {
             minutes = "0" + minutes.toString();
         }
 
-        return(<td>{hours +":"+minutes + " " + m}</td>);
+        return(<td>{month + "/" + day + " " + hours + ":" + minutes + " " + m}</td>);
     }
 
     render(){

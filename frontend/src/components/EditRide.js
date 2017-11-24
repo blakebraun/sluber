@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import ItemService from './ItemService';
+import RideService from './RideService';
 
-class EditItem extends Component {
+class EditRide extends Component {
 
     constructor(props){
         super(props);
-        this.addItemService = new ItemService();
+        this.addRideService = new RideService();
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validateForm = this.validateForm.bind(this);
@@ -14,7 +14,7 @@ class EditItem extends Component {
     }
 
     componentWillMount(){
-        axios.get('http://localhost:4200/items/edit/'+this.props.match.params.id)
+        axios.get('http://localhost:4200/rides/edit/'+this.props.match.params.id)
         .then(response => {
             this.setState({
                 name:response.data.name,
@@ -34,7 +34,7 @@ class EditItem extends Component {
     validateForm() {
         let bannerPattern = new RegExp("00[0-9]{7}");
         let phonePattern = new RegExp("[0-9]{10}");
-        let emailPattern = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+        let emailPattern = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
         let dispatchedPattern = new RegExp("[0-9]{3}");
 
         if(!bannerPattern.test(this.state.banner)){
@@ -73,7 +73,7 @@ class EditItem extends Component {
     handleSubmit(event) {
         event.preventDefault();
         if(this.validateForm()) {
-            this.addItemService.updateData(this.state, this.props.match.params.id);
+            this.addRideService.updateData(this.state, this.props.match.params.id);
             this.props.history.push('/index');
         }
     }
@@ -117,4 +117,4 @@ class EditItem extends Component {
     }
 }
 
-export default EditItem;
+export default EditRide;

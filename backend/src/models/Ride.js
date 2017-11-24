@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+let mongoose = require('mongoose');
+let Schema = mongoose.Schema;
 
-var Item = new Schema({
+let Ride = new Schema({
     name: {
         type: String
     },
@@ -27,7 +27,7 @@ var Item = new Schema({
         type: String
     }
 },{
-    collection: 'items'
+    collection: 'rides'
 });
 
-module.exports = mongoose.model('Item', Item);
+module.exports = mongoose.model('Ride', Ride);

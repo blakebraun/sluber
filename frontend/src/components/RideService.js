@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-class ItemService{
+class RideService{
 
     sendData(data) {
-        axios.post('http://localhost:4200/items/add/post',{
+        axios.post('http://localhost:4200/rides/add/post',{
                 name:data.name,
                 banner:data.banner,
                 phone:data.phone,
@@ -12,12 +12,12 @@ class ItemService{
                 dropoff: data.dropoff,
                 received: data.received,
         })
-        .then(res => this.setState({items: res.data}))
+        .then(res => this.setState({rides: res.data}))
         .catch(err => console.log(err))
     }
 
     updateData(data, id){
-        axios.post('http://localhost:4200/items/update/'+id, {
+        axios.post('http://localhost:4200/rides/update/'+id, {
             name:data.name,
             banner:data.banner,
             phone:data.phone,
@@ -26,14 +26,14 @@ class ItemService{
             dropoff: data.dropoff,
             dispatched: data.dispatched
         })
-        .then(res => this.setState({ items:res.data}))
+        .then(res => this.setState({ rides:res.data}))
         .catch(err => console.log(err))
     }
 	
 	deleteData(id){
-	    axios.get('http://localhost:4200/items/delete/'+id)
+	    axios.get('http://localhost:4200/rides/delete/'+id)
 	    .then().catch(err => console.log(err))
 	  }
 }
 
-export default ItemService;
+export default RideService;
