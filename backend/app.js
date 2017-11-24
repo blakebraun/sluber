@@ -3,12 +3,13 @@ let app = express();
 let mongoose = require('mongoose');
 let bodyParser = require('body-parser');
 let cors = require('cors');
-let port = 4200;
+let config = require('./config');
+let port = config.expressPort;
 
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://127.0.0.1:27017/sluber');
+mongoose.connect(config.mongoURL);
 
-let rideRouter = require('./src/routes/itemRouter');
+let rideRouter = require('./src/routes/rideRouter');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
