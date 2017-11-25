@@ -4,7 +4,7 @@ body {
   font-family: sans-serif;
 }
 
-.add-button {
+.button {
   background-color: #003DA5;
   border: none;
   border-radius: 4px;
@@ -14,15 +14,27 @@ body {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  right: 25px;
   top:35px;
-  position: absolute;
+}
+
+.main-content {
+    margin: auto;
+    text-align: center;
+}
+
+.logo {
+  padding-bottom:10px;
+}
+
+.btn-area {
+    padding-top: 20px;
+}
+
+h1 {
+    text-align: center;
 }
 
 hr {
   border-width: 3px;
 }
 
-.rides {
-    background-color: #5BC2E7;
-}
