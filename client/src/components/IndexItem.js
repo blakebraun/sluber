@@ -5,7 +5,7 @@ class IndexItem extends Component {
     render() {
        return(
            <div className="main-content">
-                <img src="/img/SLUber.png" alt="SLUber" height="100px" className="logo" />
+                <img src="/img/logo.png" alt="SLUber" height="100px" className="logo" />
                <div className="intro">
                    <h2>Welcome to SLU Ride!</h2><hr />
                    <h4>Our Hours:</h4>

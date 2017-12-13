@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import RideService from './RideService';
 let config = require('../config');
+let locations = require('../locations');
 
 class EditRide extends Component {
 
@@ -11,6 +12,7 @@ class EditRide extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validateForm = this.validateForm.bind(this);
+        this.populateLocations = this.populateLocations.bind(this);
         this.state={};
     }
 
@@ -63,6 +65,12 @@ class EditRide extends Component {
         }
     }
 
+    populateLocations() {
+        return locations.map(function(location, i){
+            return <option value={location} key={i}>{location}</option>;
+        })
+    }
+
     handleInputChange(event){
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -75,7 +83,7 @@ class EditRide extends Component {
         event.preventDefault();
         if(this.validateForm()) {
             this.addRideService.updateData(this.state, this.props.match.params.id);
-            this.props.history.push('/index');
+            this.props.history.push('/');
         }
     }
 
@@ -94,19 +102,11 @@ class EditRide extends Component {
                             <input name="email" type="text" value={this.state.email} onChange={this.handleInputChange} className="form-control"/>
                             Pickup Location:
                             <select name="pickup" value={this.state.pickup} onChange={this.handleInputChange} className="form-control">
-                                <option value="BSC">BSC</option>
-                                <option value="Griesedieck">Griesedieck</option>
-                                <option value="Marchetti">Marchetti</option>
-                                <option value="Reinert">Reinert</option>
-                                <option value="Spring">Spring</option>
+                                {this.populateLocations()}
                             </select>
                             Dropoff Location:
                             <select name="dropoff" value={this.state.dropoff} onChange={this.handleInputChange} className="form-control">
-                                <option value="BSC">BSC</option>
-                                <option value="Griesedieck">Griesedieck</option>
-                                <option value="Marchetti">Marchetti</option>
-                                <option value="Reinert">Reinert</option>
-                                <option value="Spring">Spring</option>
+                                {this.populateLocations()}
                             </select>
                             Unit Dispatched:
                             <input name="dispatched" type="text" value={this.state.dispatched} onChange={this.handleInputChange} className="form-control" />

@@ -8,7 +8,7 @@ rideRouter.route('/add/post').post(function(req,res){
     let ride = new Ride(req.body);
     ride.save()
         .then(ride=> {
-            res.json('Item added successfully');
+            res.json(ride._id);
         })
         .catch(err => {
             res.status(400).send("unable to save to database");

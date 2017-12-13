@@ -14,6 +14,7 @@ class RideService{
                 received: data.received,
         })
         .then(res => this.setState({rides: res.data}))
+        //     .then(res=> this.setState({id:res.data._id}))
         .catch(err => console.log(err))
     }
 

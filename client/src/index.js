@@ -15,7 +15,7 @@ ReactDOM.render(
                 <Route path = '/add-ride' component={AddRide} />
                 <Route path='/index' component={IndexItem}/>
                 <Route path='/edit/:id' component={EditRide}/>
-                <Route path='/complete' component={Complete}/>
+                <Route path='/complete/' component={Complete}/>
             </div>
         </Router>,
         document.getElementById('root')

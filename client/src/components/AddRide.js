@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import RideService from './RideService';
 import {Link} from 'react-router-dom';
+let locations = require('../locations');
 
 class AddRide extends Component {
 
@@ -15,6 +16,8 @@ class AddRide extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validateForm = this.validateForm.bind(this);
+        this.populateLocations = this.populateLocations.bind(this);
+        this.addRideService.sendData = this.addRideService.sendData.bind(this);
     }
 
     validateForm() {
@@ -43,19 +46,26 @@ class AddRide extends Component {
         }
     }
 
+    populateLocations() {
+        return locations.map(function(location, i){
+            return <option value={location} key={i}>{location}</option>;
+        })
+    }
+
     handleInputChange(event) {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
+        const fieldName = target.name;
 
-        this.setState({[name]: value});
+        this.setState({[fieldName]: value});
     }
 
     handleSubmit(event) {
         event.preventDefault();
         if(this.validateForm()) {
             this.addRideService.sendData(this.state);
-            this.props.history.push('/complete');
+            console.log(this.state.id)
+            this.props.history.push('/complete/');
         }
     }
 
@@ -74,19 +84,11 @@ class AddRide extends Component {
                                 <input name="email" type="text" value={this.state.email} onChange={this.handleInputChange} className="form-control" required />
                         <h4>Pickup Location:</h4>
                                 <select name="pickup" value={this.state.pickup} onChange={this.handleInputChange} className="form-control" required>
-                                    <option value="BSC">BSC</option>
-                                    <option value="Griesedieck">Griesedieck</option>
-                                    <option value="Marchetti">Marchetti</option>
-                                    <option value="Reinert">Reinert</option>
-                                    <option value="Spring">Spring</option>
+                                    {this.populateLocations()}
                                 </select>
                         <h4>Dropoff Location:</h4>
                                 <select name="dropoff" value={this.state.dropoff} onChange={this.handleInputChange} className="form-control" required>
-                                    <option value="BSC">BSC</option>
-                                    <option value="Griesedieck">Griesedieck</option>
-                                    <option value="Marchetti">Marchetti</option>
-                                    <option value="Reinert">Reinert</option>
-                                    <option value="Spring">Spring</option>
+                                    {this.populateLocations()}
                                 </select>
                         <br/>
                         <input type="submit" value="Submit" className="button"/>
