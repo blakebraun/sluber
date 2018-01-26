@@ -36,6 +36,12 @@ class RideService{
 	    axios.get(config.backendURL + '/rides/delete/'+id)
 	    .then().catch(err => console.log(err))
 	  }
+
+    getCount(){
+        axios.get(config.backendURL + '/rides/count')
+            .then(res => this.setState({count:res.data}))
+            .catch(err => console.log(err))
+    }
 }
 
 export default RideService;

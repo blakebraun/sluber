@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import RideService from './RideService';
+import {Link} from 'react-router-dom';
 let config = require('../config');
 let locations = require('../locations');
 
@@ -111,7 +112,8 @@ class EditRide extends Component {
                             Unit Dispatched:
                             <input name="dispatched" type="text" value={this.state.dispatched} onChange={this.handleInputChange} className="form-control" />
                         </label><br />
-                        <input type="submit" value="Update" className="btn btn-primary"/>
+                        <input type="submit" value="Update" className="update-button" style={{color: 'white', textDecoration:'none'}}/>
+                        <Link to={"/"} className="cancel-button" style={{color: 'white', textDecoration:'none'}}>Cancel</Link>
                      </form>
                 </div>
         );

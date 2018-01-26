@@ -64,4 +64,11 @@ rideRouter.route('/delete/:id').get(function(req,res) {
             });
 });
 
+rideRouter.route('/count').get(function(req,res) {
+    Ride.count(function(err,count){
+        if(err) res.json(err);
+        else res.json(count);
+    })
+});
+
 module.exports = rideRouter;

@@ -3,7 +3,8 @@ import RideService from './RideService';
 import axios from 'axios';
 import TableRow from './TableRow';
 import {Link} from 'react-router-dom';
-let config = require('../config')
+import {connect, PromiseState} from 'react-refetch';
+let config = require('../config');
 
 class IndexItem extends Component {
 
@@ -12,7 +13,7 @@ class IndexItem extends Component {
         this.state = {value:'', rides:''};
         this.addRideService = new RideService();
     }
-
+/*
     componentDidMount(){
         axios.get(config.backendURL + '/rides')
             .then(response=>{
@@ -22,6 +23,7 @@ class IndexItem extends Component {
                 console.log(error);
             })
     }
+
     tabRow(){
         if(this.state.rides instanceof Array){
             return this.state.rides.map(function(object, i){
@@ -29,25 +31,35 @@ class IndexItem extends Component {
             })
         }
     }
+*/
+
+    tabRow(){
+       if(this.props.ridesFetch.value instanceof Array){
+           return this.props.ridesFetch.value.map(function (object, i) {
+               return <TableRow obj={object} key={i}/>;
+           })
+       }
+    }
+
 
     render() {
        return(
            <div>
-            <img src="/img/dispatcher.png" alt="SLUber Dispatcher Console" height="100px" />
+            <img src="/img/dispatcher.png" alt="SLU Ride Dispatcher Console" height="100px" />
                <Link to={"/add-ride"} className="add-button" style={{color: 'white', textDecoration:'none'}}>Add Ride</Link>
                <hr />
                <div className="container">
                 <table className="table table=striped">
                     <thead>
                         <tr>
-                            <td>Time Received</td>
-                            <td>Name</td>
-                            <td>Banner</td>
-                            <td>Phone Number</td>
-                            <td>Email</td>
-                            <td>Start Location</td>
-                            <td>End Location</td>
-                            <td>Unit Dispatched</td>
+                            <td><b>Time Received</b></td>
+                            <td><b>Name</b></td>
+                            <td><b>Banner</b></td>
+                            <td><b>Phone Number</b></td>
+                            <td><b>Email</b></td>
+                            <td><b>Start Location</b></td>
+                            <td><b>End Location</b></td>
+                            <td><b>Unit Dispatched</b></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,5 +72,7 @@ class IndexItem extends Component {
     }
 }
 
-export default IndexItem;
+export default connect(props => ({
+    ridesFetch: {url:`${config.backendURL}/rides`, refreshInterval: 1000}
+}))(IndexItem)
 

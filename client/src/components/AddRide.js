@@ -77,9 +77,9 @@ class AddRide extends Component {
                         <h4>Name:</h4>
                                 <input name="name" type="text" value={this.state.name} onChange={this.handleInputChange} className="form-control" required />
                         <h4>Banner ID:</h4>
-                                <input name="banner" type="text" value={this.state.banner} onChange={this.handleInputChange} className="form-control" required />
+                                <input name="banner" type="text" pattern="\d*" value={this.state.banner} onChange={this.handleInputChange} className="form-control" required />
                         <h4>Phone Number:</h4>
-                                <input name="phone" type="text" value={this.state.phone} onChange={this.handleInputChange} className="form-control" required />
+                                <input name="phone" type="text" pattern="\d*" value={this.state.phone} onChange={this.handleInputChange} className="form-control" required />
                         <h4>Email:</h4>
                                 <input name="email" type="text" value={this.state.email} onChange={this.handleInputChange} className="form-control" required />
                         <h4>Pickup Location:</h4>
