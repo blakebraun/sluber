@@ -1,6 +1,6 @@
 var config = {
     expressPort: 4200,
-    mongoURL: 'mongodb://172.17.109.147:27017/sluber'
+    mongoURL: 'mongodb://localhost:27017/sluber'
 };
 
 module.exports = config;

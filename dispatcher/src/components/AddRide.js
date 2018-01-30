@@ -63,7 +63,7 @@ class AddRide extends Component {
         event.preventDefault();
         if(this.validateForm()) {
             this.addRideService.sendData(this.state);
-            this.props.history.push('/');
+            this.props.close();
         }
     }
 
@@ -73,13 +73,13 @@ class AddRide extends Component {
                     <form onSubmit={this.handleSubmit}>
                         <label>
                             Name:
-                                <input name="name" type="text" value={this.state.name} onChange={this.handleInputChange} className="form-control" required />
+                                <input name="name" type="text" value={this.state.name} placeholder="Full Name" onChange={this.handleInputChange} className="form-control" required />
                             Banner ID:
-                                <input name="banner" type="text" value={this.state.banner} onChange={this.handleInputChange} className="form-control" required />
+                                <input name="banner" type="text" value={this.state.banner} placeholder="000123456" onChange={this.handleInputChange} className="form-control" required />
                             Phone Number:
-                                <input name="phone" type="text" value={this.state.phone} onChange={this.handleInputChange} className="form-control" required />
+                                <input name="phone" type="text" value={this.state.phone} placeholder="3145555555" onChange={this.handleInputChange} className="form-control" required />
                             Email:
-                                <input name="email" type="text" value={this.state.email} onChange={this.handleInputChange} className="form-control" required />
+                                <input name="email" type="text" value={this.state.email} placeholder="first.last@slu.edu" onChange={this.handleInputChange} className="form-control" required />
                             Pickup Location:
                                 <select name="pickup" value={this.state.pickup} onChange={this.handleInputChange} className="form-control" required>
                                     {this.populateLocations()}
@@ -90,10 +90,9 @@ class AddRide extends Component {
                                 </select>
                         </label>
                         <br/>
-                        <input type="submit" value="Submit" className="btn btn-primary"/>
+                        <input type="submit" value="Submit" className="submit-button"/>
+                        <button onClick={this.props.close} className="cancel-button">Cancel</button>
                     </form>
-							<br/>
-					<Link to={"/index"} className="btn btn-primary">Back to List</Link>
 				</div>
         );
     }

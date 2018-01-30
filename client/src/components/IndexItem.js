@@ -50,6 +50,6 @@ class IndexItem extends Component {
 }
 
 export default connect(props => ({
-    ridesFetch: {url:`${config.backendURL}/rides/count`, refreshInterval: 1000}
+    ridesFetch: {url:`${config.backendURL}/rides/count`, refreshInterval: 5000}
 }))(IndexItem)
 
