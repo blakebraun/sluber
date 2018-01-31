@@ -21,6 +21,7 @@ class IndexItem extends Component {
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.toggleModal = this.toggleModal.bind(this)
     }
 
     tabRow(){
@@ -42,14 +43,17 @@ class IndexItem extends Component {
         this.setState({modalIsOpen: false});
     }
 
+    toggleModal(){
+        this.setState({modalIsOpen: !this.state.modalIsOpen});
+    }
+
     render() {
        return(
            <div>
-           <div>
+           <div className="main-header">
             <img src="/img/dispatcher.png" alt="SLU Ride Dispatcher Console" height="100px" className="main-logo" />
-               {/*<Link to={"/add-ride"} className="add-button" style={{color: 'white', textDecoration:'none'}}>Add Ride</Link>*/}
                <div>
-                    <button onClick={this.openModal} className="add-button" style={{color: 'white', textDecoration:'none'}}>Add Ride</button>
+                    <button onClick={this.toggleModal} className="add-button" style={{color: 'white', textDecoration:'none'}}>Add Ride</button>
                    <Modal
                         isOpen={this.state.modalIsOpen}
                         onAfterOpen={this.afterOpenModal}
@@ -65,21 +69,21 @@ class IndexItem extends Component {
                         <AddRide close={this.closeModal}/>
                     </Modal>
                </div>
-
-               </div>
-               <hr />
-               <div className="container">
-                <table className="table table=striped">
-                    <thead>
+           </div>
+               <div>
+                <table className="rides-table">
+                    <thead className="rides-table-header">
                         <tr>
-                            <td><b>Time Received</b></td>
-                            <td><b>Name</b></td>
-                            <td><b>Banner</b></td>
-                            <td><b>Phone Number</b></td>
-                            <td><b>Email</b></td>
-                            <td><b>Start Location</b></td>
-                            <td><b>End Location</b></td>
-                            <td><b>Unit Dispatched</b></td>
+                            <td className="rides-table-cell"><b>Time Received</b></td>
+                            <td className="rides-table-cell"><b>Name</b></td>
+                            <td className="rides-table-cell"><b>Banner</b></td>
+                            <td className="rides-table-cell"><b>Phone Number</b></td>
+                            <td className="rides-table-cell"><b>Email</b></td>
+                            <td className="rides-table-cell"><b>Start Location</b></td>
+                            <td className="rides-table-cell"><b>End Location</b></td>
+                            <td className="rides-table-cell"><b>Unit Dispatched</b></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     </thead>
                     <tbody>

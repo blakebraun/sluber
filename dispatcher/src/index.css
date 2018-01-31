@@ -75,10 +75,41 @@ hr {
     bottom:50px;
     width: 320px;
     max-width: 100%;
-
 }
 
 .modal-content{
     position: absolute;
     max-width: 100%;
+    padding: 10px 0px 10px 0px;
 }
+
+.rides-table {
+    position: absolute;
+    padding-top: 500px;
+    width: 100%;
+}
+
+.rides-table-cell {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.rides-table-edit-cell{
+    padding: 2px;
+    border-bottom: 1px solid #ddd;
+}
+
+.rides-table-header{
+    background-color: #003DA5;
+    color:white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    white-space: nowrap;
+}
+
+.main-header {
+    position: static;
+    padding-bottom: 30px;
+}
+
+

@@ -11,7 +11,6 @@ ReactDOM.render(
             <div>
                 <Route exact path='/' component={IndexItem} />
                 <Route path='/index' component={IndexItem}/>
-                <Route path='/edit/:id' component={EditRide}/>
             </div>
         </Router>,
         document.getElementById('root')

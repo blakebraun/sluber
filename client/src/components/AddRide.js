@@ -75,13 +75,13 @@ class AddRide extends Component {
                     <h1>Request a Ride!</h1><hr />
                     <form onSubmit={this.handleSubmit}>
                         <h4>Name:</h4>
-                                <input name="name" type="text" value={this.state.name} onChange={this.handleInputChange} className="form-control" required />
+                                <input name="name" type="text" value={this.state.name} placeholder="Full Name" onChange={this.handleInputChange} className="form-control" required />
                         <h4>Banner ID:</h4>
-                                <input name="banner" type="text" pattern="\d*" value={this.state.banner} onChange={this.handleInputChange} className="form-control" required />
+                                <input name="banner" type="text" pattern="\d*" value={this.state.banner} placeholder="000123456" onChange={this.handleInputChange} className="form-control" required />
                         <h4>Phone Number:</h4>
-                                <input name="phone" type="text" pattern="\d*" value={this.state.phone} onChange={this.handleInputChange} className="form-control" required />
+                                <input name="phone" type="text" pattern="\d*" value={this.state.phone} placeholder="3145555555" onChange={this.handleInputChange} className="form-control" required />
                         <h4>Email:</h4>
-                                <input name="email" type="text" value={this.state.email} onChange={this.handleInputChange} className="form-control" required />
+                                <input name="email" type="text" value={this.state.email} placeholder="first.last@slu.edu" onChange={this.handleInputChange} className="form-control" required />
                         <h4>Pickup Location:</h4>
                                 <select name="pickup" value={this.state.pickup} onChange={this.handleInputChange} className="form-control" required>
                                     {this.populateLocations()}
