@@ -64,6 +64,7 @@ class AddRide extends Component {
         if(this.validateForm()) {
             this.addRideService.sendData(this.state);
             this.props.close();
+            window.location.reload();
         }
     }
 
@@ -87,6 +88,14 @@ class AddRide extends Component {
                             Dropoff Location:
                                 <select name="dropoff" value={this.state.dropoff} onChange={this.handleInputChange} className="form-control" required>
                                     {this.populateLocations()}
+                                </select>
+                            Unit Dispatched: (optional)
+                                <select name="dispatched" value={this.state.dispatched} onChange={this.handleInputChange} className="form-control">
+                                    <option></option>
+                                    <option value="815">815</option>
+                                    <option value="816">816</option>
+                                    <option value="817">817</option>
+                                    <option value="800">800</option>
                                 </select>
                         </label>
                         <br/>

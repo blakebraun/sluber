@@ -123,10 +123,6 @@ class TableRow extends Component {
             alert("Pickup and dropoff locations may not be the same.");
             return false;
         }
-        else if(this.state.dispatched && (!dispatchedPattern.test(this.state.dispatched) && this.state.dispatched.length !== 0)){
-            alert("Unit must be 3 numbers long.");
-            return false;
-        }
         else{
             return true;
         }
@@ -170,7 +166,13 @@ class TableRow extends Component {
                     <td className="rides-table-edit-cell"><select name="dropoff" value={this.state.dropoff} onChange={this.handleInputChange} className="form-control">
                         {this.populateLocations()}
                     </select></td>
-                    <td className="rides-table-edit-cell"><input name="dispatched" type="text" value={this.state.dispatched} onChange={this.handleInputChange} className="form-control" /></td>
+                    <td className="rides-table-edit-cell"><select name="dispatched" value={this.state.dispatched} onChange={this.handleInputChange} className="form-control">
+                        <option></option>
+                        <option value="815">815</option>
+                        <option value="816">816</option>
+                        <option value="817">817</option>
+                        <option value="800">800</option>
+                    </select></td>
                     <td><button onClick={this.handleSubmit} className="btn btn-primary">Update</button></td>
                     <td>
                         <button onClick={this.toggleEdit} className="btn btn-primary">Cancel</button>
