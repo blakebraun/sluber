@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import RideService from './RideService';
+import Modal from 'react-modal';
 let locations = require('../locations');
 
 class TableRow extends Component {
@@ -15,6 +16,11 @@ class TableRow extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validateForm = this.validateForm.bind(this);
+        this.openModal = this.openModal.bind(this);
+        this.afterOpenModal = this.afterOpenModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+        this.toggleModal = this.toggleModal.bind(this)
+
         this.state = {
             name: this.props.obj.name,
             banner: this.props.obj.banner,
@@ -23,7 +29,8 @@ class TableRow extends Component {
             pickup: this.props.obj.pickup,
             dropoff: this.props.obj.dropoff,
             dispatched: this.props.obj.dispatched,
-            edit: false
+            edit: false,
+            modalIsOpen: false
         };
     }
 
@@ -60,7 +67,7 @@ class TableRow extends Component {
             minutes = "0" + minutes.toString();
         }
 
-        return(<td className="rides-table-cell">{month + "/" + day + " " + hours + ":" + minutes + " " + m}</td>);
+        return(<div>{month + "/" + day + " " + hours + ":" + minutes + " " + m}</div>);
     }
 
     handleInputChange(event){
@@ -128,44 +135,80 @@ class TableRow extends Component {
         }
     }
 
+    openModal() {
+        this.setState({modalIsOpen: true});
+    }
+
+    afterOpenModal(){
+    }
+
+    closeModal() {
+        this.setState({modalIsOpen: false});
+    }
+
+    toggleModal(){
+        this.setState({modalIsOpen: !this.state.modalIsOpen});
+    }
+
     render(){
         if(!this.state.edit) {
             return (
                 <tr className>
-                    {this.formatTime()}
+                    <td className="rides-table-cell">{this.formatTime()}</td>
                     <td className="rides-table-cell">{this.props.obj.name}</td>
-                    <td className="rides-table-cell">{this.props.obj.banner}</td>
-                    <td className="rides-table-cell">{this.props.obj.phone}</td>
-                    <td className="rides-table-cell"><a href={"mailto:" + this.props.obj.email}>{this.props.obj.email}</a></td>
                     <td className="rides-table-cell">{this.props.obj.pickup}</td>
                     <td className="rides-table-cell">{this.props.obj.dropoff}</td>
+                    <td className="rides-table-cell">11:00 PM</td>
+                    <td className="rides-table-cell">11:15 PM</td>
                     <td className="rides-table-cell">{this.props.obj.dispatched}</td>
                     <td>
                         {/*<Link to={"/edit/" + this.props.obj._id} className="btn btn-primary">Edit</Link>*/}
                         <button onClick={this.toggleEdit} className="btn btn-primary">Edit</button>
                     </td>
-                    <td>
+                    {/*<td>
                         <form onSubmit={this.handleDelete}>
                             <input type="submit" value="Delete" className="btn btn-danger"/>
                         </form>
-                    </td>
+                    </td>*/}
+                    <div>
+                        <button onClick={this.toggleModal} className="details-button" style={{color: 'white', textDecoration:'none'}}>Details</button>
+                        <Modal
+                            isOpen={this.state.modalIsOpen}
+                            onAfterOpen={this.afterOpenModal}
+                            onRequestClose={this.closeModal}
+                            contentLabel="Details"
+                        >
+                            <div className="details-content">
+                                Time Received: {this.formatTime()}<br />
+                                Name: {this.props.obj.name}<br />
+                                Banner ID: {this.props.obj.banner}<br />
+                                Phone Number: {this.props.obj.phone}<br />
+                                Email Address: <a href={"mailto:" + this.props.obj.email}>{this.props.obj.email}</a><br />
+                                Pickup Location: {this.props.obj.pickup}<br />
+                                Dropoff Location: {this.props.obj.dropoff}<br />
+                                Pickup Time: 11:00 PM<br />
+                                Dropoff Time: 11:15 PM<br />
+                                Unit Dispatched: {this.props.obj.dispatched}<br />
+                                <button onClick={this.toggleModal} className="details-button" style={{color: 'white', textDecoration:'none'}}>Close</button>
+                            </div>
+                        </Modal>
+                    </div>
                 </tr>
             );
         }
         else{
             return(
                 <tr>
-                    {this.formatTime()}
+                    <td className="rides-table-cell">{this.formatTime()}</td>
                     <td className="rides-table-edit-cell"><input name="name" type="text" value={this.state.name} onChange={this.handleInputChange} className="form-control" /></td>
-                    <td className="rides-table-edit-cell"><input name="banner" type="text" value={this.state.banner} onChange={this.handleInputChange} className="form-control" /></td>
-                    <td className="rides-table-edit-cell"><input name="phone" type="text" value={this.state.phone} onChange={this.handleInputChange} className="form-control" /></td>
-                    <td className="rides-table-edit-cell"><input name="email" type="text" value={this.state.email} onChange={this.handleInputChange} className="form-control" /></td>
                     <td className="rides-table-edit-cell"><select name="pickup" value={this.state.pickup} onChange={this.handleInputChange} className="form-control">
                         {this.populateLocations()}
                     </select></td>
                     <td className="rides-table-edit-cell"><select name="dropoff" value={this.state.dropoff} onChange={this.handleInputChange} className="form-control">
                         {this.populateLocations()}
                     </select></td>
+                    <td className="rides-table-cell">11:00 PM</td>
+                    <td className="rides-table-cell">11:15 PM</td>
                     <td className="rides-table-edit-cell"><select name="dispatched" value={this.state.dispatched} onChange={this.handleInputChange} className="form-control">
                         <option></option>
                         <option value="815">815</option>

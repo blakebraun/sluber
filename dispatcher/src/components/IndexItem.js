@@ -15,7 +15,7 @@ class IndexItem extends Component {
         this.state = {
             value:'',
             rides:'',
-            modalIsOpen: false
+            modalIsOpen: false,
         };
         this.addRideService = new RideService();
         this.openModal = this.openModal.bind(this);
@@ -58,7 +58,7 @@ class IndexItem extends Component {
                         isOpen={this.state.modalIsOpen}
                         onAfterOpen={this.afterOpenModal}
                         onRequestClose={this.closeModal}
-                        contentLabel="Test"
+                        contentLabel="Add Ride"
                         className={{
                             base: 'modal-content'
                         }}
@@ -76,11 +76,10 @@ class IndexItem extends Component {
                         <tr>
                             <td className="rides-table-cell"><b>Time Received</b></td>
                             <td className="rides-table-cell"><b>Name</b></td>
-                            <td className="rides-table-cell"><b>Banner</b></td>
-                            <td className="rides-table-cell"><b>Phone Number</b></td>
-                            <td className="rides-table-cell"><b>Email</b></td>
                             <td className="rides-table-cell"><b>Start Location</b></td>
                             <td className="rides-table-cell"><b>End Location</b></td>
+                            <td className="rides-table-cell"><b>Pickup Time</b></td>
+                            <td className="rides-table-cell"><b>Dropoff Time</b></td>
                             <td className="rides-table-cell"><b>Unit Dispatched</b></td>
                             <td></td>
                             <td></td>

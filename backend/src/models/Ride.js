@@ -14,6 +14,9 @@ let Ride = new Schema({
     email:{
         type: String
     },
+    riders:{
+        type: String
+    },
     pickup:{
         type: String
     },
