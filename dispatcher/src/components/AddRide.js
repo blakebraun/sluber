@@ -47,7 +47,12 @@ class AddRide extends Component {
 
     populateLocations() {
         return locations.map(function(location, i){
-            return <option value={location} key={i}>{location}</option>;
+            if(location === "Frost Campus" || location === "Medical Campus" || location === "Off Campus" || location === "Intersections"){
+                return <option value={location} key={i} disabled>{location}</option>;
+            }
+            else{
+                return <option value={location} key={i}>{location}</option>;
+            }
         })
     }
 

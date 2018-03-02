@@ -165,3 +165,8 @@ hr {
     bottom: 10px;
 }
 
+.login-content {
+    margin: auto;
+    text-align: center;
+    font-family: "Roboto";
+}
