@@ -11,3 +11,6 @@ Running Instructions:
 5. cd into the dispatcher folder and run 'npm start'. The dispatcher application should open in your browser on localhost:3000. Do the same for the client folder. This will run on localhost:3001.
 
 6. All systems should now be communicating. All database interaction is local at this point.
+
+
+NOTE: Our basic app structure was derived from https://appdividend.com/2017/06/28/mern-stack-tutorial/, and credit is due.
