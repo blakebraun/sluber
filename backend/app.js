@@ -9,13 +9,16 @@ let port = config.expressPort;
 mongoose.Promise = require('bluebird');
 mongoose.connect(config.mongoURL);
 
+let loginRouter = require('./src/routes/loginRouter');
 let rideRouter = require('./src/routes/rideRouter');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+app.set('view engine', 'ejs');
 app.use('/rides', rideRouter);
+app.use('/logins', loginRouter);
 
 app.listen(port, function(){
     console.log('Server is running on Port: ', port);
