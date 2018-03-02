@@ -39,6 +39,7 @@ rideRouter.route('/update/:id').post(function(req,res){
             return next(new Error('Could not load Document'));
         else {
             ride.name = req.body.name;
+            ride.riders = req.body.riders;
             ride.banner = req.body.banner;
             ride.phone = req.body.phone;
             ride.email = req.body.email;

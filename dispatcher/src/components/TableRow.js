@@ -23,6 +23,7 @@ class TableRow extends Component {
 
         this.state = {
             name: this.props.obj.name,
+            riders: this.props.obj.riders,
             banner: this.props.obj.banner,
             phone: this.props.obj.phone,
             email: this.props.obj.email,
@@ -82,6 +83,16 @@ class TableRow extends Component {
         return locations.map(function(location, i){
             return <option value={location} key={i}>{location}</option>;
         })
+
+        /*let allLocs =  locs.split("\n");
+        return allLocs.map(function(location, i){
+            if(location === "Frost Campus" || location === "Medical Campus" || location === "Off Campus" || location === "Intersections"){
+                return <option value={location} key={i} disabled>{location}</option>;
+            }
+            else{
+                return <option value={location} key={i}>{location}</option>;
+            }
+        })*/
     }
 
     toggleEdit() {
@@ -94,6 +105,7 @@ class TableRow extends Component {
                 pickup: this.props.obj.pickup,
                 dropoff: this.props.obj.dropoff,
                 dispatched: this.props.obj.dispatched,
+                riders: this.props.obj.riders
             })
         }
         this.setState({edit: !this.state.edit});
@@ -156,40 +168,80 @@ class TableRow extends Component {
                 <tr className>
                     <td className="rides-table-cell">{this.formatTime()}</td>
                     <td className="rides-table-cell">{this.props.obj.name}</td>
+                    <td className="rides-table-cell">{this.props.obj.riders}</td>
                     <td className="rides-table-cell">{this.props.obj.pickup}</td>
                     <td className="rides-table-cell">{this.props.obj.dropoff}</td>
                     <td className="rides-table-cell">11:00 PM</td>
                     <td className="rides-table-cell">11:15 PM</td>
                     <td className="rides-table-cell">{this.props.obj.dispatched}</td>
-                    <td>
-                        {/*<Link to={"/edit/" + this.props.obj._id} className="btn btn-primary">Edit</Link>*/}
-                        <button onClick={this.toggleEdit} className="btn btn-primary">Edit</button>
+                    <td className="rides-table-cell">
+                        <button onClick={this.toggleEdit} className="table-button">Edit</button>
                     </td>
-                    {/*<td>
-                        <form onSubmit={this.handleDelete}>
-                            <input type="submit" value="Delete" className="btn btn-danger"/>
-                        </form>
-                    </td>*/}
                     <div>
-                        <button onClick={this.toggleModal} className="details-button" style={{color: 'white', textDecoration:'none'}}>Details</button>
+                        <td className="rides-table-cell">
+                        <button onClick={this.toggleModal} className="table-button" style={{color: 'white', textDecoration:'none'}}>Details</button>
+                        </td>
                         <Modal
                             isOpen={this.state.modalIsOpen}
                             onAfterOpen={this.afterOpenModal}
                             onRequestClose={this.closeModal}
                             contentLabel="Details"
+                            className={{
+                                base: 'modal-content'
+                            }}
+                            overlayClassName={{
+                                base: 'modal-overlay'
+                            }}
                         >
-                            <div className="details-content">
-                                Time Received: {this.formatTime()}<br />
-                                Name: {this.props.obj.name}<br />
-                                Banner ID: {this.props.obj.banner}<br />
-                                Phone Number: {this.props.obj.phone}<br />
-                                Email Address: <a href={"mailto:" + this.props.obj.email}>{this.props.obj.email}</a><br />
-                                Pickup Location: {this.props.obj.pickup}<br />
-                                Dropoff Location: {this.props.obj.dropoff}<br />
-                                Pickup Time: 11:00 PM<br />
-                                Dropoff Time: 11:15 PM<br />
-                                Unit Dispatched: {this.props.obj.dispatched}<br />
-                                <button onClick={this.toggleModal} className="details-button" style={{color: 'white', textDecoration:'none'}}>Close</button>
+                            <div className="details-table">
+                                <table>
+                                    <tr>
+                                        <td className="details-table-cell"><b>Time Received:</b></td>
+                                        <td className="details-table-cell">{this.formatTime()}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="details-table-cell"><b>Name:</b></td>
+                                        <td className="details-table-cell">{this.props.obj.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="details-table-cell"><b>Banner ID:</b></td>
+                                        <td className="details-table-cell">{this.props.obj.banner}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="details-table-cell"><b>Phone Number:</b></td>
+                                        <td className="details-table-cell">{this.props.obj.phone}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="details-table-cell"><b>Email Address:</b></td>
+                                        <td className="details-table-cell"><a href={"mailto:" + this.props.obj.email}>{this.props.obj.email}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td className="details-table-cell"><b>Number of Riders:</b></td>
+                                        <td className="details-table-cell">{this.props.obj.riders}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="details-table-cell"><b>Pickup Location:</b></td>
+                                        <td className="details-table-cell">{this.props.obj.pickup}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="details-table-cell"><b>Dropoff Location:</b></td>
+                                        <td className="details-table-cell">{this.props.obj.dropoff}</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="details-table-cell"><b>Pickup Time:</b></td>
+                                        <td className="details-table-cell">11:00 PM</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="details-table-cell"><b>Dropoff Time:</b></td>
+                                        <td className="details-table-cell">11:15 PM</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="details-table-cell"><b>Unit Dispatched:</b></td>
+                                        <td className="details-table-cell">{this.props.obj.dispatched}</td>
+                                    </tr>
+                                </table>
+                                <button onClick={this.toggleModal} className="close-button" style={{color: 'white', textDecoration:'none'}}>Close</button>
+                                <button onClick={this.handleDelete} className="delete-button" style={{color: 'white', textDecoration:'none'}}>Delete Ride</button>
                             </div>
                         </Modal>
                     </div>
@@ -201,14 +253,24 @@ class TableRow extends Component {
                 <tr>
                     <td className="rides-table-cell">{this.formatTime()}</td>
                     <td className="rides-table-edit-cell"><input name="name" type="text" value={this.state.name} onChange={this.handleInputChange} className="form-control" /></td>
+                    <td className="rides-table-edit-cell">
+                        <select name="riders" value={this.state.riders} onChange={this.handleInputChange} className="form-control" required>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                    </td>
                     <td className="rides-table-edit-cell"><select name="pickup" value={this.state.pickup} onChange={this.handleInputChange} className="form-control">
                         {this.populateLocations()}
                     </select></td>
                     <td className="rides-table-edit-cell"><select name="dropoff" value={this.state.dropoff} onChange={this.handleInputChange} className="form-control">
                         {this.populateLocations()}
                     </select></td>
-                    <td className="rides-table-cell">11:00 PM</td>
-                    <td className="rides-table-cell">11:15 PM</td>
+                    <td className="rides-table-edit-cell">11:00 PM</td>
+                    <td className="rides-table-edit-cell">11:15 PM</td>
                     <td className="rides-table-edit-cell"><select name="dispatched" value={this.state.dispatched} onChange={this.handleInputChange} className="form-control">
                         <option></option>
                         <option value="815">815</option>
@@ -216,9 +278,9 @@ class TableRow extends Component {
                         <option value="817">817</option>
                         <option value="800">800</option>
                     </select></td>
-                    <td><button onClick={this.handleSubmit} className="btn btn-primary">Update</button></td>
-                    <td>
-                        <button onClick={this.toggleEdit} className="btn btn-primary">Cancel</button>
+                    <td className="rides-table-edit-cell"><button onClick={this.handleSubmit} className="table-button">Update</button></td>
+                    <td className="rides-table-edit-cell">
+                        <button onClick={this.toggleEdit} className="table-button">Cancel</button>
                     </td>
                 </tr>
             )

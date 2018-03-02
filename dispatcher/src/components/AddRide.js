@@ -10,7 +10,7 @@ class AddRide extends Component {
 
         let now = Date.now();
 
-        this.state = {pickup:"BSC", dropoff:"BSC", received:now};
+        this.state = {pickup:"BSC", dropoff:"BSC", received:now, riders: "1"};
         this.addRideService = new RideService();
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -75,6 +75,15 @@ class AddRide extends Component {
                         <label>
                             Name:
                                 <input name="name" type="text" value={this.state.name} placeholder="Full Name" onChange={this.handleInputChange} className="form-control" required />
+                            Number of Riders:
+                                <select name="riders" value={this.state.riders} onChange={this.handleInputChange} className="form-control" required>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
                             Banner ID:
                                 <input name="banner" type="text" value={this.state.banner} placeholder="000123456" onChange={this.handleInputChange} className="form-control" required />
                             Phone Number:

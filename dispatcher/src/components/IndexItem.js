@@ -76,6 +76,7 @@ class IndexItem extends Component {
                         <tr>
                             <td className="rides-table-cell"><b>Time Received</b></td>
                             <td className="rides-table-cell"><b>Name</b></td>
+                            <td className="rides-table-cell"><b># Riders</b></td>
                             <td className="rides-table-cell"><b>Start Location</b></td>
                             <td className="rides-table-cell"><b>End Location</b></td>
                             <td className="rides-table-cell"><b>Pickup Time</b></td>

@@ -10,7 +10,7 @@ class AddRide extends Component {
 
         let now = Date.now();
 
-        this.state = {pickup:"BSC", dropoff:"BSC", received:now};
+        this.state = {pickup:"BSC", dropoff:"BSC", received:now, riders:"1"};
         this.addRideService = new RideService();
 
         this.handleInputChange = this.handleInputChange.bind(this);
