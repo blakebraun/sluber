@@ -13,7 +13,7 @@ class AddRide extends Component {
 
         let now = Date.now();
 
-        this.state = {pickup:"BSC", dropoff:"BSC", received:now, riders:"1", advice:"Use Location to Advise Pickup",
+        this.state = {pickup:"BSC", dropoff:"BSC", received:now, riders:"1", advice:"Use My Location",
         lat: 0, long: 0};
         this.addRideService = new RideService();
         this.geoOptions = {
@@ -87,10 +87,10 @@ class AddRide extends Component {
     }
 
     findClosest(pos){
-//        let lat = pos.coords.latitude;
-//        let long = pos.coords.longitude;
-        let lat = '38.634830';
-        let long = '-90.224989';
+        let lat = pos.coords.latitude;
+        let long = pos.coords.longitude;
+ //       let lat = '38.634830';
+ //       let long = '-90.224989';
 
 
         let min = 99999;
@@ -130,7 +130,7 @@ class AddRide extends Component {
         }
 
         const newText = locations[closest][0];
-        this.setState({advice: newText});
+        this.setState({pickup: newText});
     }
 
     handleGeolocate() {
@@ -158,7 +158,6 @@ class AddRide extends Component {
         return(
                 <div className="main-content" padding="5">
                     <h1>Request a Ride!</h1><hr />
-                    <h2><input type = "button" className = "button" value = {this.state.advice} onClick = {this.handleGeolocate} /></h2>
                     <br/>
                     <br/>
 
@@ -184,6 +183,9 @@ class AddRide extends Component {
                                 <select name="pickup" value={this.state.pickup} onChange={this.handleInputChange} className="form-control" required>
                                     {this.populateLocations()}
                                 </select>
+                        <br />
+                        <input type = "button" className = "button" value = {this.state.advice} onClick = {this.handleGeolocate} />
+                        <br />
                         <h4>Dropoff Location:</h4>
                                 <select name="dropoff" value={this.state.dropoff} onChange={this.handleInputChange} className="form-control" required>
                                     {this.populateLocations()}
