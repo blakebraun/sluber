@@ -87,10 +87,10 @@ class AddRide extends Component {
     }
 
     findClosest(pos){
-//        let lat = pos.coords.latitude;
-//        let long = pos.coords.longitude;
-        let lat = '38.634830';
-        let long = '-90.224989';
+        let lat = pos.coords.latitude;
+        let long = pos.coords.longitude;
+//        let lat = '38.634830';
+//        let long = '-90.224989';
 
 
         let min = 99999;

@@ -5,7 +5,7 @@ class RideService{
 
     sendData(data) {
         axios.post(config.backendURL + '/rides/add/post',{
-                name:data.name,
+                name: data.name,
                 riders: data.riders,
                 banner:data.banner,
                 phone:data.phone,
@@ -21,7 +21,7 @@ class RideService{
 
     updateData(data, id){
         axios.post(config.backendURL + '/rides/update/'+id, {
-            name:data.name,
+            name: data.name,
             riders: data.riders,
             banner:data.banner,
             phone:data.phone,

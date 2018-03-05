@@ -28,6 +28,9 @@ let Ride = new Schema({
     },
     dispatched:{
         type: String
+    },
+    advice:{
+        type: String
     }
 },{
     collection: 'rides'
