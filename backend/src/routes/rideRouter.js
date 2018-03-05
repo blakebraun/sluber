@@ -43,8 +43,10 @@ rideRouter.route('/update/:id').post(function(req,res){
             ride.banner = req.body.banner;
             ride.phone = req.body.phone;
             ride.email = req.body.email;
-            ride.pickup = req.body.pickup;
-            ride.dropoff = req.body.dropoff;
+            ride.pickupLoc = req.body.pickupLoc;
+            ride.dropoffLoc = req.body.dropoffLoc;
+            ride.pickupTime = req.body.pickupTime;
+            ride.dropoffTime = req.body.dropoffTime;
             ride.dispatched = req.body.dispatched;
 
             ride.save().then(ride => {

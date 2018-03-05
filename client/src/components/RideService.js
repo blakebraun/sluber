@@ -10,8 +10,8 @@ class RideService{
                 banner:data.banner,
                 phone:data.phone,
                 email: data.email,
-                pickup: data.pickup,
-                dropoff: data.dropoff,
+                pickupLoc: data.pickupLoc,
+                dropoffLoc: data.dropoffLoc,
                 received: data.received,
         })
         .then(res => this.setState({rides: res.data}))
@@ -26,8 +26,10 @@ class RideService{
             banner:data.banner,
             phone:data.phone,
             email: data.email,
-            pickup: data.pickup,
-            dropoff: data.dropoff,
+            pickupLoc: data.pickupLoc,
+            dropoffLoc: data.dropoffLoc,
+            pickupTime: data.pickupTime,
+            dropoffTime: data.dropoffTime,
             dispatched: data.dispatched
         })
         .then(res => this.setState({ rides:res.data}))

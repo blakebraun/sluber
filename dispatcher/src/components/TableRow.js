@@ -27,8 +27,10 @@ class TableRow extends Component {
             banner: this.props.obj.banner,
             phone: this.props.obj.phone,
             email: this.props.obj.email,
-            pickup: this.props.obj.pickup,
-            dropoff: this.props.obj.dropoff,
+            pickupLoc: this.props.obj.pickupLoc,
+            dropoffLoc: this.props.obj.dropoffLoc,
+            pickupTime: this.props.obj.pickupTime,
+            dropoffTime: this.props.obj.dropoffTime,
             dispatched: this.props.obj.dispatched,
             edit: false,
             modalIsOpen: false
@@ -97,8 +99,10 @@ class TableRow extends Component {
                 banner: this.props.obj.banner,
                 phone: this.props.obj.phone,
                 email: this.props.obj.email,
-                pickup: this.props.obj.pickup,
-                dropoff: this.props.obj.dropoff,
+                pickupLoc: this.props.obj.pickupLoc,
+                dropoffLoc: this.props.obj.dropoffLoc,
+                pickupTime: this.props.obj.pickupTime,
+                dropoffTime: this.props.obj.dropoffTime,
                 dispatched: this.props.obj.dispatched,
                 riders: this.props.obj.riders
             })
@@ -133,7 +137,7 @@ class TableRow extends Component {
             alert("Please enter a valid email address.");
             return false;
         }
-        else if(this.state.pickup === this.state.dropoff){
+        else if(this.state.pickupLoc === this.state.dropoffLoc){
             alert("Pickup and dropoff locations may not be the same.");
             return false;
         }
@@ -164,10 +168,10 @@ class TableRow extends Component {
                     <td className="rides-table-cell">{this.formatTime()}</td>
                     <td className="rides-table-cell">{this.props.obj.name}</td>
                     <td className="rides-table-cell">{this.props.obj.riders}</td>
-                    <td className="rides-table-cell">{this.props.obj.pickup}</td>
-                    <td className="rides-table-cell">{this.props.obj.dropoff}</td>
-                    <td className="rides-table-cell">11:00 PM</td>
-                    <td className="rides-table-cell">11:15 PM</td>
+                    <td className="rides-table-cell">{this.props.obj.pickupLoc}</td>
+                    <td className="rides-table-cell">{this.props.obj.dropoffLoc}</td>
+                    <td className="rides-table-cell">{this.props.obj.pickupTime}</td>
+                    <td className="rides-table-cell">{this.props.obj.dropoffTime}</td>
                     <td className="rides-table-cell">{this.props.obj.dispatched}</td>
                     <td className="rides-table-cell">
                         <button onClick={this.toggleEdit} className="table-button">Edit</button>
@@ -216,19 +220,19 @@ class TableRow extends Component {
                                     </tr>
                                     <tr>
                                         <td className="details-table-cell"><b>Pickup Location:</b></td>
-                                        <td className="details-table-cell">{this.props.obj.pickup}</td>
+                                        <td className="details-table-cell">{this.props.obj.pickupLoc}</td>
                                     </tr>
                                     <tr>
                                         <td className="details-table-cell"><b>Dropoff Location:</b></td>
-                                        <td className="details-table-cell">{this.props.obj.dropoff}</td>
+                                        <td className="details-table-cell">{this.props.obj.dropoffLoc}</td>
                                     </tr>
                                     <tr>
                                         <td className="details-table-cell"><b>Pickup Time:</b></td>
-                                        <td className="details-table-cell">11:00 PM</td>
+                                        <td className="details-table-cell">{this.props.obj.pickupTime}</td>
                                     </tr>
                                     <tr>
                                         <td className="details-table-cell"><b>Dropoff Time:</b></td>
-                                        <td className="details-table-cell">11:15 PM</td>
+                                        <td className="details-table-cell">{this.props.obj.dropoffTime}</td>
                                     </tr>
                                     <tr>
                                         <td className="details-table-cell"><b>Unit Dispatched:</b></td>
@@ -247,7 +251,7 @@ class TableRow extends Component {
             return(
                 <tr>
                     <td className="rides-table-cell">{this.formatTime()}</td>
-                    <td className="rides-table-edit-cell"><input name="name" type="text" value={this.state.name} onChange={this.handleInputChange} className="form-control" /></td>
+                    <td className="rides-table-edit-cell"><input name="name" type="text" value={this.state.name} onChange={this.handleInputChange} className="form-control" required/></td>
                     <td className="rides-table-edit-cell">
                         <select name="riders" value={this.state.riders} onChange={this.handleInputChange} className="form-control" required>
                             <option value="1">1</option>
@@ -258,15 +262,15 @@ class TableRow extends Component {
                             <option value="6">6</option>
                         </select>
                     </td>
-                    <td className="rides-table-edit-cell"><select name="pickup" value={this.state.pickup} onChange={this.handleInputChange} className="form-control">
+                    <td className="rides-table-edit-cell"><select name="pickupLoc" value={this.state.pickupLoc} onChange={this.handleInputChange} className="form-control" required>
                         {this.populateLocations()}
                     </select></td>
-                    <td className="rides-table-edit-cell"><select name="dropoff" value={this.state.dropoff} onChange={this.handleInputChange} className="form-control">
+                    <td className="rides-table-edit-cell"><select name="dropoffLoc" value={this.state.dropoffLoc} onChange={this.handleInputChange} className="form-control" required>
                         {this.populateLocations()}
                     </select></td>
-                    <td className="rides-table-edit-cell">11:00 PM</td>
-                    <td className="rides-table-edit-cell">11:15 PM</td>
-                    <td className="rides-table-edit-cell"><select name="dispatched" value={this.state.dispatched} onChange={this.handleInputChange} className="form-control">
+                    <td className="rides-table-edit-cell"><input name="pickupTime" type="text" value={this.state.pickupTime} onChange={this.handleInputChange} className="form-control" required /></td>
+                    <td className="rides-table-edit-cell"><input name="dropoffTime" type="text" value={this.state.dropoffTime} onChange={this.handleInputChange} className="form-control" required /></td>
+                    <td className="rides-table-edit-cell"><select name="dispatched" value={this.state.dispatched} onChange={this.handleInputChange} className="form-control" required>
                         <option></option>
                         <option value="815">815</option>
                         <option value="816">816</option>

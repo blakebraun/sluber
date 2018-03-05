@@ -17,10 +17,16 @@ let Ride = new Schema({
     riders:{
         type: String
     },
-    pickup:{
+    pickupLoc:{
         type: String
     },
-    dropoff:{
+    dropoffLoc:{
+        type: String
+    },
+    pickupTime:{
+        type: String
+    },
+    dropoffTime: {
         type: String
     },
     received:{
