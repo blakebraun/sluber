@@ -142,6 +142,7 @@ class AddRide extends Component {
 
             function fail(err) {
                 console.warn(`ERROR(${err.code}): ${err.message}`);
+                alert("Location failed.");
             }
 
             geo.getCurrentPosition( this.findClosest, fail , this.geoOptions );
@@ -157,10 +158,8 @@ class AddRide extends Component {
     render(){
         return(
                 <div className="main-content" padding="5">
+                    <img src="/img/logo.png" alt="SLU Ride" height="100px" className="logo" />
                     <h1>Request a Ride!</h1><hr />
-                    <br/>
-                    <br/>
-
                     <form onSubmit={this.handleSubmit}>
                         <h4>Name:</h4>
                                 <input name="name" type="text" value={this.state.name} placeholder="Full Name" onChange={this.handleInputChange} className="form-control" required />
