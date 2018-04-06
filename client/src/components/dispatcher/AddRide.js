@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import RideService from './RideService';
 import {Link} from 'react-router-dom';
-let locations = require('../locations');
+let locations = require('../../locations');
 
 class AddRide extends Component {
 
@@ -47,11 +47,11 @@ class AddRide extends Component {
 
     populateLocations() {
         return locations.map(function(location, i){
-            if(location === "Frost Campus" || location === "Medical Campus" || location === "Off Campus" || location === "Intersections"){
-                return <option value={location} key={i} disabled>{location}</option>;
+            if(location[0] === "Frost Campus" || location[0] === "Medical Campus" || location[0] === "Off Campus" || location[0] === "Intersections"){
+                return <option value={location[0]} key={i} disabled>{location[0]}</option>;
             }
             else{
-                return <option value={location} key={i}>{location}</option>;
+                return <option value={location[0]} key={i}>{location[0]}</option>;
             }
         })
     }

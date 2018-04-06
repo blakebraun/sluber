@@ -6,9 +6,9 @@ import {Link} from 'react-router-dom';
 import {connect, PromiseState} from 'react-refetch';
 import Modal from 'react-modal';
 import AddRide from './AddRide';
-let config = require('../config');
+let config = require('../../config');
 
-class IndexItem extends Component {
+class DispatcherIndex extends Component {
 
     constructor(props) {
         super(props);
@@ -101,5 +101,5 @@ class IndexItem extends Component {
 
 export default connect(props => ({
     ridesFetch: {url:`${config.backendURL}/rides/`, refreshInterval: 5000}
-}))(IndexItem)
+}))(DispatcherIndex)
 

@@ -1,5 +1,5 @@
 let config = {
-    backendURL: 'http://sluber-backend.blakebraun.com:4200'
+    backendURL: 'http://localhost:4200'
 };
 
 module.exports = config;

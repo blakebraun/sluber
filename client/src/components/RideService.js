@@ -13,6 +13,7 @@ class RideService{
                 pickupLoc: data.pickupLoc,
                 dropoffLoc: data.dropoffLoc,
                 received: data.received,
+                status: data.status
         })
         .then(res => this.setState({rides: res.data}))
         //     .then(res=> this.setState({id:res.data._id}))
@@ -30,7 +31,8 @@ class RideService{
             dropoffLoc: data.dropoffLoc,
             pickupTime: data.pickupTime,
             dropoffTime: data.dropoffTime,
-            dispatched: data.dispatched
+            dispatched: data.dispatched,
+            status: data.status
         })
         .then(res => this.setState({ rides:res.data}))
         .catch(err => console.log(err))

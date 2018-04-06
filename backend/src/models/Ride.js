@@ -34,6 +34,9 @@ let Ride = new Schema({
     },
     dispatched:{
         type: String
+    },
+    status:{
+        type: String
     }
 },{
     collection: 'rides'

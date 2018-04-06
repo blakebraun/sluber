@@ -1,5 +1,5 @@
 import axios from 'axios';
-let config = require('../config');
+let config = require('../../config');
 
 class RideService{
 

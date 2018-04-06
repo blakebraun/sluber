@@ -13,8 +13,8 @@ class AddRide extends Component {
 
         let now = Date.now();
 
-        this.state = {pickupLoc:"BSC", dropoffLoc:"BSC", received:now, riders:"1", advice:"Use My Location",
-        lat: 0, long: 0};
+        this.state = {pickupLoc:"Adorjan Hall", dropoffLoc:"Adorjan Hall", received:now, riders:"1", advice:"Use My Location",
+        lat: 0, long: 0, status: "Active"};
         this.addRideService = new RideService();
         this.geoOptions = {
             enableHighAccuracy: true,
