@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import RideService from './RideService';
 import {Link} from 'react-router-dom';
-import {geolocated, geoPropTypes} from 'react-geolocated';
 
 let locations = require('../locations');
 
@@ -13,8 +12,7 @@ class AddRide extends Component {
 
         let now = Date.now();
 
-        this.state = {pickup:"BSC", dropoff:"BSC", received:now, riders:"1", advice:"Use My Location",
-        lat: 0, long: 0};
+        this.state = {pickup:"BSC", dropoff:"BSC", received:now, riders:"1"};
         this.addRideService = new RideService();
         this.geoOptions = {
             enableHighAccuracy: true,
@@ -89,9 +87,8 @@ class AddRide extends Component {
     findClosest(pos){
         let lat = pos.coords.latitude;
         let long = pos.coords.longitude;
- //       let lat = '38.634830';
- //       let long = '-90.224989';
-
+ //       let lat = '38.6361805';
+ //       let long = '-90.2326726';
 
         let min = 99999;
         let closest;
@@ -111,8 +108,8 @@ class AddRide extends Component {
         }
 
         function getDist(lat1, long1, lat2, long2){
-            let R = 6371; // Radius of the earth in km
-            let dLat = degToRad(lat2-lat1);  // deg2rad below
+            let R = 6371; // Radius of the earth (km)
+            let dLat = degToRad(lat2-lat1);
             let dLon = degToRad(long2-long1);
             let a =
                 Math.sin(dLat/2) * Math.sin(dLat/2) +
@@ -149,7 +146,7 @@ class AddRide extends Component {
         } else {
             /* geolocation IS NOT available */
             const newText = 'fail';
-            this.setState({advice: newText});
+            this.setState({pickup: newText});
         }
 
     }
@@ -184,7 +181,7 @@ class AddRide extends Component {
                                     {this.populateLocations()}
                                 </select>
                         <br />
-                        <input type = "button" className = "button" value = {this.state.advice} onClick = {this.handleGeolocate} />
+                        <input type = "button" className = "button" value = "Use My Location" onClick = {this.handleGeolocate} />
                         <br />
                         <h4>Dropoff Location:</h4>
                                 <select name="dropoff" value={this.state.dropoff} onChange={this.handleInputChange} className="form-control" required>
@@ -201,7 +198,5 @@ class AddRide extends Component {
 }
 
 
-AddRide.propTypes = Object.assign({}, AddRide.propTypes, geoPropTypes);
-
 //export default AddRide;
-export default geolocated()(AddRide);
+export default AddRide;
