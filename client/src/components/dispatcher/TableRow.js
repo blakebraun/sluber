@@ -19,7 +19,9 @@ class TableRow extends Component {
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.toggleModal = this.toggleModal.bind(this)
+        this.toggleModal = this.toggleModal.bind(this);
+        this.dispatchRide = this.dispatchRide.bind(this);
+        this.sendUpdate = this.sendUpdate.bind(this);
 
         this.state = {
             name: this.props.obj.name,
@@ -112,6 +114,34 @@ class TableRow extends Component {
         this.setState({edit: !this.state.edit});
     }
 
+    sendUpdate(){
+        this.addRideService.updateData(this.state, this.props.obj._id);
+        window.location.reload();
+    }
+
+    dispatchRide(){
+        let now = new Date;
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        let m;
+        if(hours>11) {
+            m = "PM";
+        }
+        else{
+            m = "AM";
+        }
+        if(hours>12) {
+            hours = hours - 12;
+        }
+
+        if(minutes<10){
+            minutes = "0" + minutes.toString();
+        }
+
+        let time = hours + ":" + minutes + " " + m;
+        this.setState({status: "Dispatched", pickupTime: time}, this.sendUpdate);
+    }
+
     handleSubmit(event) {
         event.preventDefault();
         if(this.validateForm()) {
@@ -167,6 +197,7 @@ class TableRow extends Component {
         if(!this.state.edit) {
             return (
                 <tr className>
+                    <td className="rides-table-cell">{this.props.obj.status}</td>
                     <td className="rides-table-cell">{this.formatTime()}</td>
                     <td className="rides-table-cell">{this.props.obj.name}</td>
                     <td className="rides-table-cell">{this.props.obj.riders}</td>
@@ -175,13 +206,17 @@ class TableRow extends Component {
                     <td className="rides-table-cell">{this.props.obj.pickupTime}</td>
                     <td className="rides-table-cell">{this.props.obj.dropoffTime}</td>
                     <td className="rides-table-cell">{this.props.obj.dispatched}</td>
-                    <td className="rides-table-cell">
-                        <button onClick={this.toggleEdit} className="table-button">Edit</button>
-                    </td>
+                    <div className="dropdown">
+                        <button className="dropbtn">Ride Actions</button>
+                        <div className="dropdown-content">
+                            <button onClick={this.toggleEdit} className="dropdown-button">Edit</button>
+                            <button onClick={this.dispatchRide} className="dropdown-button">Dispatch</button>
+                            <button className="dropdown-button">Complete</button>
+                            <button onClick={this.toggleModal} className="dropdown-button">View Details</button>
+                            <button onClick={this.handleDelete} className="dropdown-button" style={{backgroundColor: "#ff0019", color:"white"}}>Delete</button>
+                        </div>
+                    </div>
                     <div>
-                        <td className="rides-table-cell">
-                        <button onClick={this.toggleModal} className="table-button" style={{color: 'white', textDecoration:'none'}}>Details</button>
-                        </td>
                         <Modal
                             isOpen={this.state.modalIsOpen}
                             onAfterOpen={this.afterOpenModal}
@@ -246,7 +281,7 @@ class TableRow extends Component {
                                     </tr>
                                 </table>
                                 <button onClick={this.toggleModal} className="close-button" style={{color: 'white', textDecoration:'none'}}>Close</button>
-                                <button onClick={this.handleDelete} className="delete-button" style={{color: 'white', textDecoration:'none'}}>Delete Ride</button>
+                                <button onClick={this.handleDelete} className="dispatcher-delete-button" style={{color: 'white', textDecoration:'none'}}>Delete Ride</button>
                             </div>
                         </Modal>
                     </div>
@@ -256,6 +291,13 @@ class TableRow extends Component {
         else{
             return(
                 <tr>
+                    <td className="rides-table-cell">
+                        <select name="status" value={this.state.status} onChange={this.handleInputChange} className="form-control" required>
+                            <option value="Active">Active</option>
+                            <option value="Dispatched">Dispatched</option>
+                            <option value="Complete">Complete</option>
+                        </select>
+                    </td>
                     <td className="rides-table-cell">{this.formatTime()}</td>
                     <td className="rides-table-edit-cell"><input name="name" type="text" value={this.state.name} onChange={this.handleInputChange} className="form-control" required/></td>
                     <td className="rides-table-edit-cell">

@@ -1,16 +1,22 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import RideService from './RideService';
+import {Link} from 'react-router-dom';
 let config = require('../config');
+let locations = require('../locations');
+
 
 class EditRide extends Component {
 
     constructor(props){
         super(props);
+        let now = Date.now();
+
         this.addRideService = new RideService();
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validateForm = this.validateForm.bind(this);
+        this.populateLocations = this.populateLocations.bind(this);
         this.state={};
     }
 
@@ -22,9 +28,10 @@ class EditRide extends Component {
                 banner:response.data.banner,
                 phone:response.data.phone,
                 email: response.data.email,
-                pickup: response.data.pickup,
-                dropoff: response.data.dropoff,
-                dispatched: response.data.dispatched,
+                pickupLoc: response.data.pickupLoc,
+                dropoffLoc: response.data.dropoffLoc,
+                status: response.data.status,
+                riders: response.data.riders
             });
         })
         .catch(function(error){
@@ -36,7 +43,7 @@ class EditRide extends Component {
         let bannerPattern = new RegExp("00[0-9]{7}");
         let phonePattern = new RegExp("[0-9]{10}");
         let emailPattern = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
-        let dispatchedPattern = new RegExp("[0-9]{3}");
+        let riderPattern = new RegExp("[1-6]");
 
         if(!bannerPattern.test(this.state.banner)){
             alert("Please enter a valid banner ID.");
@@ -50,17 +57,24 @@ class EditRide extends Component {
             alert("Please enter a valid email address.");
             return false;
         }
-        else if(this.state.pickup === this.state.dropoff){
-            alert("Pickup and dropoff locations may not be the same.");
-            return false;
-        }
-        else if(this.state.dispatched && (!dispatchedPattern.test(this.state.dispatched) && this.state.dispatched.length !== 0)){
-            alert("Unit must be 3 numbers long.");
+        else if(this.state.pickupLoc === this.state.dropoffLoc) {
+            alert("Pickup and dropoff locations may not be the same.")
             return false;
         }
         else{
             return true;
         }
+    }
+
+    populateLocations() {
+        return locations.map(function(location, i){
+            if(location[0] === "Frost Campus" || location[0] === "Medical Campus" || location[0] === "Off Campus" || location[0] === "Intersections"){
+                return <option value={location[0]} key={i} disabled>{location[0]}</option>;
+            }
+            else{
+                return <option value={location[0]} key={i}>{location[0]}</option>;
+            }
+        })
     }
 
     handleInputChange(event){
@@ -75,44 +89,46 @@ class EditRide extends Component {
         event.preventDefault();
         if(this.validateForm()) {
             this.addRideService.updateData(this.state, this.props.match.params.id);
-            this.props.history.push('/index');
+            this.props.history.push('/complete/' + this.props.match.params.id);
         }
     }
 
     render() {
         return(
-                <div className="container">
+            <div className="main-content" padding="5">
+                <img src="/img/logo.png" alt="SLU Ride" height="100px" className="logo"/>
+                <h1 className="request-header">Edit Your Ride</h1>
                     <form onSubmit={this.handleSubmit}>
-                        <label>
-                            Name:
+
+                        <h4>Name:</h4>
                             <input name="name" type="text" value={this.state.name} onChange={this.handleInputChange} className="form-control"/>
-                            Banner ID:
+                        <h4>Banner ID:</h4>
                             <input name="banner" type="text" value={this.state.banner} onChange={this.handleInputChange} className="form-control"/>
-                            Phone Number:
+                        <h4>Phone Number:</h4>
                             <input name="phone" type="text" value={this.state.phone} onChange={this.handleInputChange} className="form-control"/>
-                            Email:
+                        <h4>Email:</h4>
                             <input name="email" type="text" value={this.state.email} onChange={this.handleInputChange} className="form-control"/>
-                            Pickup Location:
-                            <select name="pickup" value={this.state.pickup} onChange={this.handleInputChange} className="form-control">
-                                <option value="BSC">BSC</option>
-                                <option value="Griesedieck">Griesedieck</option>
-                                <option value="Marchetti">Marchetti</option>
-                                <option value="Reinert">Reinert</option>
-                                <option value="Spring">Spring</option>
+                        <h4>Number of Riders:</h4>
+                            <select name="riders" value={this.state.riders} onChange={this.handleInputChange} className="form-control" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
                             </select>
-                            Dropoff Location:
-                            <select name="dropoff" value={this.state.dropoff} onChange={this.handleInputChange} className="form-control">
-                                <option value="BSC">BSC</option>
-                                <option value="Griesedieck">Griesedieck</option>
-                                <option value="Marchetti">Marchetti</option>
-                                <option value="Reinert">Reinert</option>
-                                <option value="Spring">Spring</option>
+                        <h4>Pickup Location:</h4>
+                            <select name="pickupLoc" value={this.state.pickupLoc} onChange={this.handleInputChange} className="form-control" required>
+                                {this.populateLocations()}
                             </select>
-                            Unit Dispatched:
-                            <input name="dispatched" type="text" value={this.state.dispatched} onChange={this.handleInputChange} className="form-control" />
-                        </label><br />
-                        <input type="submit" value="Update" className="btn btn-primary"/>
-                     </form>
+                        <h4>Dropoff Location:</h4>
+                            <select name="dropoffLoc" value={this.state.dropoffLoc} onChange={this.handleInputChange} className="form-control" required>
+                                {this.populateLocations()}
+                            </select>
+                            <br />
+                        <input type="submit" value="Update" className="button"/>
+                     </form><br />
+                <Link to={"/complete/" + this.props.match.params.id} className="button" style={{color: 'white', textDecoration:'none'}}>Go Back</Link>
                 </div>
         );
     }
