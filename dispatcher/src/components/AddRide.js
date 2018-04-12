@@ -10,7 +10,7 @@ class AddRide extends Component {
 
         let now = Date.now();
 
-        this.state = {pickup:"BSC", dropoff:"BSC", received:now, riders: "1"};
+        this.state = {pickupLoc:"Adorjan Hall", dropoffLoc:"Adorjan Hall", received:now, riders: "1", status: "Active"};
         this.addRideService = new RideService();
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -36,7 +36,7 @@ class AddRide extends Component {
             alert("Please enter a valid email address.");
             return false;
         }
-        else if(this.state.pickup === this.state.dropoff){
+        else if(this.state.pickupLoc === this.state.dropoffLoc){
             alert("Pickup and dropoff locations may not be the same.")
             return false;
         }
@@ -96,11 +96,11 @@ class AddRide extends Component {
                             Email:
                                 <input name="email" type="text" value={this.state.email} placeholder="first.last@slu.edu" onChange={this.handleInputChange} className="form-control" required />
                             Pickup Location:
-                                <select name="pickup" value={this.state.pickup} onChange={this.handleInputChange} className="form-control" required>
+                                <select name="pickupLoc" value={this.state.pickupLoc} onChange={this.handleInputChange} className="form-control" required>
                                     {this.populateLocations()}
                                 </select>
                             Dropoff Location:
-                                <select name="dropoff" value={this.state.dropoff} onChange={this.handleInputChange} className="form-control" required>
+                                <select name="dropoffLoc" value={this.state.dropoffLoc} onChange={this.handleInputChange} className="form-control" required>
                                     {this.populateLocations()}
                                 </select>
                             Unit Dispatched: (optional)

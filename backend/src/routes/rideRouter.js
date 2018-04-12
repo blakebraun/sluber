@@ -26,6 +26,32 @@ rideRouter.route('/').get(function(req,res){
     });
 });
 
+rideRouter.route('/status/:status').get(function(req,res){
+    Ride.find({
+        status: req.params.status
+    }, function(err, rides){
+        if(err) {
+            conosle.log(err);
+        }
+        else{
+            res.json(rides)
+        }
+    });
+});
+
+rideRouter.route('/month/:month').get(function(req,res){
+    Ride.find({
+        received: req.params.month
+    }, function(err, rides){
+        if(err) {
+            conosle.log(err);
+        }
+        else{
+            res.json(rides)
+        }
+    });
+});
+
 rideRouter.route('/edit/:id').get(function(req,res){
     let id = req.params.id;
     Ride.findById(id, function(err,ride){
@@ -43,9 +69,12 @@ rideRouter.route('/update/:id').post(function(req,res){
             ride.banner = req.body.banner;
             ride.phone = req.body.phone;
             ride.email = req.body.email;
-            ride.pickup = req.body.pickup;
-            ride.dropoff = req.body.dropoff;
+            ride.pickupLoc = req.body.pickupLoc;
+            ride.dropoffLoc = req.body.dropoffLoc;
+            ride.pickupTime = req.body.pickupTime;
+            ride.dropoffTime = req.body.dropoffTime;
             ride.dispatched = req.body.dispatched;
+            ride.status = req.body.status;
 
             ride.save().then(ride => {
                 res.json('Update complete');
