@@ -33,7 +33,7 @@ class RideService{
             dispatched: data.dispatched,
             status: data.status
         })
-        .then(res => this.setState({ rides:res.data}))
+        .then(res => this.setState({rides:res.data}))
         .catch(err => console.log(err))
     }
 	

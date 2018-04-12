@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import RideService from './RideService';
 import {Link} from 'react-router-dom';
+import Start from './add-ride/Start';
+import Riders from './add-ride/Riders';
 import {geolocated, geoPropTypes} from 'react-geolocated';
 
 let locations = require('../locations');
@@ -14,7 +16,7 @@ class AddRide extends Component {
         let now = Date.now();
 
         this.state = {pickupLoc:"Adorjan Hall", dropoffLoc:"Adorjan Hall", received:now, riders:"1", advice:"Use My Location",
-        lat: 0, long: 0, status: "Active"};
+        lat: 0, long: 0, status: "Active", screen: "start"};
         this.addRideService = new RideService();
         this.geoOptions = {
             enableHighAccuracy: true,
@@ -28,7 +30,21 @@ class AddRide extends Component {
         this.findClosest = this.findClosest.bind(this);
         this.validateForm = this.validateForm.bind(this);
         this.populateLocations = this.populateLocations.bind(this);
+        this.changeScreen = this.changeScreen.bind(this);
+        this.setId = this.setId.bind(this);
         this.addRideService.sendData = this.addRideService.sendData.bind(this);
+    }
+
+    componentWillMount(){
+        alert("NOTICE: This site is for demo purposes only! SLU Ride does not monitor requests from this site.");
+    }
+
+    changeScreen(newScreen){
+        this.setState({screen:newScreen});
+    }
+
+    setId(id){
+        this.props.history.push('/complete/' + id);
     }
 
     validateForm() {
@@ -80,9 +96,7 @@ class AddRide extends Component {
     handleSubmit(event) {
         event.preventDefault();
         if(this.validateForm()) {
-            this.addRideService.sendData(this.state);
-            console.log(this.state.id);
-            this.props.history.push('/complete/');
+            let newRide = this.addRideService.sendData(this.state);
         }
     }
 
@@ -156,10 +170,20 @@ class AddRide extends Component {
     }
 
     render(){
-        return(
+        /*if(this.state.screen === "riders"){
+            return(
+                <Riders riders={this.state.riders} changeScreen={this.changeScreen} handleChange={this.handleInputChange}/>
+            );
+        }
+        else{
+            return(
+                <Start name={this.state.name} banner={this.state.banner} phone={this.state.phone} email={this.state.email} changeScreen={this.changeScreen} handleChange={this.handleInputChange}/>
+            );
+        }*/
+       return(
                 <div className="main-content" padding="5">
-                    <img src="/img/logo.png" alt="SLU Ride" height="100px" className="logo" />
-                    <h1>Request a Ride!</h1><hr />
+                    <img src="/img/logo.png" alt="SLU Ride" height="100px" className="logo"/>
+                    <h1 className="request-header">Request a Ride!</h1>
                     <form onSubmit={this.handleSubmit}>
                         <h4>Name:</h4>
                                 <input name="name" type="text" value={this.state.name} placeholder="Full Name" onChange={this.handleInputChange} className="form-control" required />

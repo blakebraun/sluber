@@ -10,12 +10,7 @@ class IndexItem extends Component {
         super(props);
         this.state = {count:0};
         this.addRideService = new RideService();
-        this.addRideService.getCount = this.addRideService.getCount.bind(this);
         this.getRideCount = this.getRideCount.bind(this);
-    }
-
-    componentWillMount(){
-        this.addRideService.getCount();
     }
 
     getRideCount(){
@@ -29,16 +24,16 @@ class IndexItem extends Component {
            <div className="main-content">
                 <img src="/img/logo.png" alt="SLU Ride" height="100px" className="logo" />
                <div className="intro">
-                   <h2>Welcome to SLU Ride!</h2><hr />
-                   <h4>Our Hours:</h4>
-                   Mon - Wed 6pm-1am<br />
+                   <h1 className="request-header">Welcome to SLU Ride!</h1>
+                   <h2>Our Hours:</h2>
+                   Mon - Wed 6pm - 1am<br />
                    Thurs 6pm - 2am <br />
                    Fri 6pm - 3am <br />
                    Sat 7am - 3am <br />
-                   Sun 7am - 1am<hr />
+                   Sun 7am - 1am <hr />
                    <h3>Current Rides in Queue:</h3>
                    <h1>{this.getRideCount()}</h1>
-               </div><hr />
+               </div>
                <div className="btn-area">
                     <Link to={"/add-ride"} className="button" style={{color: 'white', textDecoration:'none'}}>Request a Ride!</Link>
                </div>

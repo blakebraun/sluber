@@ -77,6 +77,7 @@ class DispatcherIndex extends Component {
                 <table className="rides-table">
                     <thead className="rides-table-header">
                         <tr>
+                            <td className="rides-table-cell"><b>Status</b></td>
                             <td className="rides-table-cell"><b>Time Received</b></td>
                             <td className="rides-table-cell"><b>Name</b></td>
                             <td className="rides-table-cell"><b># Riders</b></td>
