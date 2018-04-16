@@ -12,6 +12,7 @@ class Complete extends Component {
         this.state={};
         this.getStatus = this.getStatus.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.rideButtons = this.rideButtons.bind(this);
         this.addRideService = new RideService();
     }
 
@@ -37,6 +38,19 @@ class Complete extends Component {
                     <br/><br/>{this.props.rideFetch.value.pickupLoc}.</h4>
                 )
             }
+            else if(this.props.rideFetch.value.status === 'In Progress'){
+                return(
+                    <h4>Your ride is currently in progress.
+                        <br/><br/>You will be dropped off at
+                        <br/><br/>{this.props.rideFetch.value.dropoffLoc}.</h4>
+                )
+            }
+            else if(this.props.rideFetch.value.status === 'Complete'){
+                return(
+                    <h4>Your ride has been completed.
+                        <br/><br/>Thanks for using SLU Ride!</h4>
+                )
+            }
             else{
                 return(
                     <h4>Could not determine ride status. This ride may have been deleted.</h4>
@@ -59,6 +73,17 @@ class Complete extends Component {
         }
     }
 
+    rideButtons(){
+        if(this.props.rideFetch.value instanceof Object && this.props.rideFetch.value.status === 'Active'){
+            return(
+                <div>
+                    <Link to={"/edit/" + this.props.match.params.id} className="button" style={{color: 'white', textDecoration:'none'}}>Edit Your Ride</Link>
+                    <button onClick={this.handleDelete} className="client-delete-button" style={{color: 'white', textDecoration:'none'}}>Delete Your Ride</button><br /> <br />
+                </div>
+            )
+        }
+    }
+
     render() {
         console.log(this.props.rideFetch);
         return(
@@ -67,8 +92,7 @@ class Complete extends Component {
                 <h3 className="request-header">Thanks for requesting a ride!</h3><br />
                 {this.getStatus()}
                 <div className='btn-area'>
-                    <Link to={"/edit/" + this.props.match.params.id} className="button" style={{color: 'white', textDecoration:'none'}}>Edit Your Ride</Link>
-                    <button onClick={this.handleDelete} className="client-delete-button" style={{color: 'white', textDecoration:'none'}}>Delete Your Ride</button><br /> <br />
+                    {this.rideButtons()}
                     <Link to={"/"} className="button" style={{color: 'white', textDecoration:'none'}}>Back to Home</Link> <br /><br />
                 </div>
             </div>
