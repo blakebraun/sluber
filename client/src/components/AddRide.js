@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 import RideService from './RideService';
 import {Link} from 'react-router-dom';
-import Start from './add-ride/Start';
+import Start from './add-ride/start';
 import Riders from './add-ride/Riders';
 import {geolocated, geoPropTypes} from 'react-geolocated';
 
 let locations = require('../locations');
-
+let GoogleMapsLoader = require('google-maps');
+const geolocation = require ('google-geolocation') ({
+    key: 'AIzaSyA-fssqTd74LzLLZwA7YrCXbqOY0s_74DY'
+});
+var myMap;
 
 class AddRide extends Component {
 
@@ -16,17 +20,19 @@ class AddRide extends Component {
         let now = Date.now();
 
         this.state = {pickupLoc:"Adorjan Hall", dropoffLoc:"Adorjan Hall", received:now, riders:"1", advice:"Use My Location",
-        lat: 0, long: 0, status: "Active", screen: "start"};
+        lat: 38.634804, long: -90.233378, status: "Active", screen: "start"};
         this.addRideService = new RideService();
         this.geoOptions = {
             enableHighAccuracy: true,
             timeout: 5000,
             maximumAge: 0
         };
+        this.init = true;
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleGeolocate = this.handleGeolocate.bind(this);
+        this.initMap = this.initMap.bind(this);
         this.findClosest = this.findClosest.bind(this);
         this.validateForm = this.validateForm.bind(this);
         this.populateLocations = this.populateLocations.bind(this);
@@ -101,11 +107,12 @@ class AddRide extends Component {
     }
 
     findClosest(pos){
+
+//old lat/long input (used pos param)
         let lat = pos.coords.latitude;
         let long = pos.coords.longitude;
- //       let lat = '38.634830';
- //       let long = '-90.224989';
-
+//        let lat = '38.634830';
+//        let long = '-90.224989';
 
         let min = 99999;
         let closest;
@@ -144,30 +151,120 @@ class AddRide extends Component {
         }
 
         const newText = locations[closest][0];
+        const newLat = locations[closest][1];
+        const newLong = locations[closest][2];
         this.setState({pickupLoc: newText});
+
+        var marker;
+
+        GoogleMapsLoader.load(function (google){
+            var center = new google.maps.LatLng(lat, long)
+            myMap.setCenter(center)
+        });
+
+        GoogleMapsLoader.load(function (google){
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(lat, long),
+                map: myMap
+            })
+        });
+
+        GoogleMapsLoader.load(function (google){
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(newLat, newLong),
+                map: myMap
+            })
+        });
+
+        GoogleMapsLoader.load(function (google){
+            var bounds = new google.maps.LatLngBounds();
+            var myLatLng = new google.maps.LatLng(lat, long);
+            var pickupLatLng = new google.maps.LatLng(newLat, newLong);
+            bounds.extend(myLatLng);
+            bounds.extend(pickupLatLng);
+            myMap.fitBounds(bounds);
+        })
+
     }
 
     handleGeolocate() {
 
+//html geolcation api code (old)
         if ("geolocation" in navigator) {
-            /* geolocation is available */
+        /* geolocation is available */
 
-            const geo = navigator.geolocation;
+                    const geo = navigator.geolocation;
 
-            function fail(err) {
-                console.warn(`ERROR(${err.code}): ${err.message}`);
-                alert("Location failed.");
-            }
+                    function fail(err) {
+                        console.warn(`ERROR(${err.code}): ${err.message}`);
+                        alert("Location failed.");
+                    }
 
-            geo.getCurrentPosition( this.findClosest, fail , this.geoOptions );
+                    geo.getCurrentPosition( this.findClosest, fail , this.geoOptions );
 
-        } else {
-            /* geolocation IS NOT available */
-            const newText = 'fail';
-            this.setState({advice: newText});
+                } else {
+                    /* geolocation IS NOT available */
+                    const newText = 'fail';
+                    this.setState({advice: newText});
+                }
+
+        /*
+                const params = {
+                    wifiAccessPoints: [
+                        {
+                            macAddress: '00:25:9c:cf:1c:ac',
+                            signalStrength: -65,
+                            signalToNoiseRatio: 40
+                        }
+                    ]
+                };
+
+                geolocation (params, (err, data) => {
+                    if (err) {
+                        console.log (err);
+                        return;
+                    }
+
+                    console.log (data);
+                });
+
+                let myLat = location.lat;
+                let myLong = location.lng;
+
+                this.findClosest(myLat, myLong);
+        */
+
+
+
+    }
+
+    initMap() {
+        //we only want the init to run once
+        if (this.init === true) {
+
+            let lat = this.state.lat;
+            let long = this.state.long;
+            var marker;
+
+            GoogleMapsLoader.onLoad(function (google) {
+                console.log('I just loaded google maps api');
+            });
+
+            GoogleMapsLoader.KEY = 'AIzaSyA-fssqTd74LzLLZwA7YrCXbqOY0s_74DY';
+
+            GoogleMapsLoader.load(function (google) {
+                    myMap = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: lat, lng: long},
+                    zoom: 15
+                })
+            });
+
+            //setting the init flag to false after the first run
+            this.init = false;
         }
 
     }
+
 
     render(){
         /*if(this.state.screen === "riders"){
@@ -180,6 +277,7 @@ class AddRide extends Component {
                 <Start name={this.state.name} banner={this.state.banner} phone={this.state.phone} email={this.state.email} changeScreen={this.changeScreen} handleChange={this.handleInputChange}/>
             );
         }*/
+
        return(
                 <div className="main-content" padding="5">
                     <img src="/img/logo.png" alt="SLU Ride" height="100px" className="logo"/>
@@ -210,6 +308,13 @@ class AddRide extends Component {
                         <input type = "button" className = "button" value = {this.state.advice} onClick = {this.handleGeolocate} />
                         <br />
                         <br />
+                        <div className = "map" id = "map"></div>
+                        <script type="text/javascript">
+                            function codeAddress(){
+                            this.initMap()};
+                            window.onload = codeAddress;
+                        </script>
+                        <br />
                         <h4>Dropoff Location:</h4>
                                 <select name="dropoffLoc" value={this.state.dropoffLoc} onChange={this.handleInputChange} className="form-control" required>
                                     {this.populateLocations()}
@@ -220,12 +325,15 @@ class AddRide extends Component {
 							<br/>
 					<Link to={"/"} className="button" style={{color: 'white', textDecoration:'none'}}>Back to Home</Link>
 				</div>
+
+
         );
+
     }
 }
 
 
-AddRide.propTypes = Object.assign({}, AddRide.propTypes, geoPropTypes);
+//AddRide.propTypes = Object.assign({}, AddRide.propTypes, geoPropTypes);
 
 //export default AddRide;
 export default geolocated()(AddRide);

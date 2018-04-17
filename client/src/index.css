@@ -24,6 +24,14 @@ body {
     font-family: "Roboto";
 }
 
+.map {
+    position: relative;
+    width: 600px;
+    height: 300px;
+    top: 50%;
+    left: 28%;
+}
+
 .logo {
     margin-top: 10px;
 }
