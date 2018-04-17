@@ -52,9 +52,7 @@ class DispatcherIndex extends Component {
            <div>
            <div className="main-header">
             <img src="/img/dispatcher.png" alt="SLU Ride Dispatcher Console" height="100px" className="main-logo" />
-               <div className="view-div">
-                <button className="view-button" style={{color: 'white', textDecoration:'none'}}>Change View</button>
-               </div>
+
                <div>
                     <button onClick={this.toggleModal} className="add-button" style={{color: 'white', textDecoration:'none'}}>Add Ride</button>
                    <Modal
@@ -87,7 +85,7 @@ class DispatcherIndex extends Component {
                             <td className="rides-table-cell"><b>Dropoff Time</b></td>
                             <td className="rides-table-cell"><b>Unit Dispatched</b></td>
                             <td></td>
-                            <td></td>
+
                         </tr>
                     </thead>
                     <tbody>

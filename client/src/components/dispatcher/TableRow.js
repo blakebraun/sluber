@@ -21,6 +21,8 @@ class TableRow extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.dispatchRide = this.dispatchRide.bind(this);
+        this.pickupRide = this.pickupRide.bind(this);
+        this.completeRide = this.completeRide.bind(this);
         this.sendUpdate = this.sendUpdate.bind(this);
 
         this.state = {
@@ -120,6 +122,20 @@ class TableRow extends Component {
     }
 
     dispatchRide(){
+        let unit = prompt("Which unit are you dispatching to this ride? (800, 815, 816, or 817)");
+        let allUnits = ["800", "815", "816", "817"];
+        if(allUnits.indexOf(unit) !== -1) {
+            this.setState({status: "Dispatched", dispatched: unit}, this.sendUpdate);
+        }
+        else if(unit === null){
+            return;
+        }
+        else{
+            alert("Invalid unit number.")
+        }
+    }
+
+    pickupRide(){
         let now = new Date;
         let hours = now.getHours();
         let minutes = now.getMinutes();
@@ -139,7 +155,30 @@ class TableRow extends Component {
         }
 
         let time = hours + ":" + minutes + " " + m;
-        this.setState({status: "Dispatched", pickupTime: time}, this.sendUpdate);
+        this.setState({status: "In Progress", pickupTime: time}, this.sendUpdate);
+    }
+
+    completeRide(){
+        let now = new Date;
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        let m;
+        if(hours>11) {
+            m = "PM";
+        }
+        else{
+            m = "AM";
+        }
+        if(hours>12) {
+            hours = hours - 12;
+        }
+
+        if(minutes<10){
+            minutes = "0" + minutes.toString();
+        }
+
+        let time = hours + ":" + minutes + " " + m;
+        this.setState({status: "Complete", dropoffTime: time}, this.sendUpdate);
     }
 
     handleSubmit(event) {
@@ -206,16 +245,19 @@ class TableRow extends Component {
                     <td className="rides-table-cell">{this.props.obj.pickupTime}</td>
                     <td className="rides-table-cell">{this.props.obj.dropoffTime}</td>
                     <td className="rides-table-cell">{this.props.obj.dispatched}</td>
+                    <td className="rides-table-cell">
                     <div className="dropdown">
                         <button className="dropbtn">Ride Actions</button>
                         <div className="dropdown-content">
                             <button onClick={this.toggleEdit} className="dropdown-button">Edit</button>
                             <button onClick={this.dispatchRide} className="dropdown-button">Dispatch</button>
-                            <button className="dropdown-button">Complete</button>
+                            <button onClick={this.pickupRide} className="dropdown-button">Pick Up</button>
+                            <button onClick={this.completeRide} className="dropdown-button">Complete</button>
                             <button onClick={this.toggleModal} className="dropdown-button">View Details</button>
                             <button onClick={this.handleDelete} className="dropdown-button" style={{backgroundColor: "#ff0019", color:"white"}}>Delete</button>
                         </div>
                     </div>
+                    </td>
                     <div>
                         <Modal
                             isOpen={this.state.modalIsOpen}
@@ -295,6 +337,7 @@ class TableRow extends Component {
                         <select name="status" value={this.state.status} onChange={this.handleInputChange} className="form-control" required>
                             <option value="Active">Active</option>
                             <option value="Dispatched">Dispatched</option>
+                            <option value="In Progress">In Progress</option>
                             <option value="Complete">Complete</option>
                         </select>
                     </td>
@@ -325,10 +368,7 @@ class TableRow extends Component {
                         <option value="817">817</option>
                         <option value="800">800</option>
                     </select></td>
-                    <td className="rides-table-edit-cell"><button onClick={this.handleSubmit} className="table-button">Update</button></td>
-                    <td className="rides-table-edit-cell">
-                        <button onClick={this.toggleEdit} className="table-button">Cancel</button>
-                    </td>
+                    <td className="edit-button-cell"><button onClick={this.handleSubmit} className="table-button">Update</button><button onClick={this.toggleEdit} className="table-button">Cancel</button></td>
                 </tr>
             )
         }
