@@ -189,7 +189,7 @@ class AddRide extends Component {
 
     handleGeolocate() {
 
-//html geolcation api code (old)
+//html geolcation api code
         if ("geolocation" in navigator) {
         /* geolocation is available */
 
@@ -208,7 +208,15 @@ class AddRide extends Component {
                     this.setState({advice: newText});
                 }
 
-        /*
+        //meaningless code used for push
+        let myNum = 4;
+        myNum += myNum;
+        if (myNum < 9){
+            myNum += myNum;
+        }
+
+        /* code for using google maps geolocation (wifi & cell towers)
+
                 const params = {
                     wifiAccessPoints: [
                         {
