@@ -9,7 +9,7 @@ import EditRide from './components/EditRide';
 import Complete from './components/Complete';
 import LoginPage from './components/dispatcher/LoginPage';
 import DispatcherIndex from './components/dispatcher/DispatcherIndex';
-
+// Here are the routes that the components are linked to. URL will be these.
 ReactDOM.render(
         <Router>
             <div>

@@ -1,6 +1,8 @@
 import axios from 'axios';
 let config = require('../config');
-
+/*
+    CLIENT: These are the functions that communicate with the database to update, and send new data. With the ID, it can assign a unique page where one can send live updates.
+ */
 class RideService{
 
     sendData(data) {

@@ -4,7 +4,9 @@ import RideService from './RideService';
 import {Link} from 'react-router-dom';
 let config = require('../config');
 let locations = require('../locations');
-
+/*
+    This file is similar to edit ride. Does not have geolocation functions.
+ */
 
 class EditRide extends Component {
 

@@ -4,7 +4,9 @@ import {connect, PromiseState} from 'react-refetch';
 import RideService from './RideService';
 let config = require('../config');
 
-
+/*
+    This is the component that the user sees when the user finishes requesting their ride. This updates as the dispatcher changes status.
+ */
 class Complete extends Component {
 
     constructor(props){

@@ -3,7 +3,9 @@ import {Link} from 'react-router-dom';
 import RideService from './RideService';
 import {connect, PromiseState} from 'react-refetch';
 let config = require('../config');
-
+/* CLIENT - This is the page you see when you use the app as a user. Displays the Hours and has buttons to request a ride
+   Has a live counter with how many rides in queue with getRideCount.
+ */
 class IndexItem extends Component {
 
     constructor(props){

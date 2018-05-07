@@ -52,7 +52,7 @@ class AddRide extends Component {
     setId(id){
         this.props.history.push('/complete/' + id);
     }
-
+// Validation is used to make sure user cannot enter certain characters. Various fields and their forbidden characters are here.
     validateForm() {
         let bannerPattern = new RegExp("00[0-9]{7}");
         let phonePattern = new RegExp("[0-9]{10}");
@@ -98,14 +98,14 @@ class AddRide extends Component {
 
         this.setState({[fieldName]: value});
     }
-
+// From the HTML code, the user puts all their information into this.state and with handleSubmit it will send the data to the Database.
     handleSubmit(event) {
         event.preventDefault();
         if(this.validateForm()) {
             let newRide = this.addRideService.sendData(this.state);
         }
     }
-
+// This function finds the closest building in a preset list of SLU buildings and nearby buildings and autofills the location with the button that calls this func.
     findClosest(pos){
 
 //old lat/long input (used pos param)
