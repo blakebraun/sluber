@@ -6,7 +6,7 @@ let config = require('../config');
 class RideService{
 
     sendData(data) {
-        axios.post(config.backendURL + '/rides/add/post',{
+        axios.post(config.backendURL + '/rides/add/post',{/*adds ride, then returns Mongo ID for ride to AddRide*/
                 name: data.name,
                 riders: data.riders,
                 banner:data.banner,
@@ -21,7 +21,7 @@ class RideService{
         .catch(err => console.log(err))
     }
 
-    updateData(data, id){
+    updateData(data, id){/*updates ride in DB*/
         axios.post(config.backendURL + '/rides/update/'+id, {
             name: data.name,
             riders: data.riders,
@@ -39,12 +39,12 @@ class RideService{
         .catch(err => console.log(err))
     }
 	
-	deleteData(id){
+	deleteData(id){/*deletes ride*/
 	    axios.get(config.backendURL + '/rides/delete/'+id)
 	    .then().catch(err => console.log(err))
 	  }
 
-    getCount(){
+    getCount(){/*gets number of rides in DB. needs to be refined*/
         axios.get(config.backendURL + '/rides/count')
             .then(res => this.setState({count:res.data}))
             .catch(err => console.log(err))

@@ -18,7 +18,7 @@ class Complete extends Component {
         this.addRideService = new RideService();
     }
 
-    getStatus(){
+    getStatus(){ /*Checks current status of ride in DB using passed in ID and returns a message*/
         let numRides = parseInt(this.props.rideCount.value) - 1;
 
         if(this.props.rideFetch.value instanceof Object)
@@ -66,7 +66,7 @@ class Complete extends Component {
         }
     }
 
-    handleDelete(event) {
+    handleDelete(event) {/*Confirms ride deletion before deleting*/
         event.preventDefault();
         let del = window.confirm("Are you sure you want to delete your ride?");
         if(del){
@@ -75,7 +75,7 @@ class Complete extends Component {
         }
     }
 
-    rideButtons(){
+    rideButtons(){/*Only gives user option to edit/delete if their ride hasn't been dispatched yet*/
         if(this.props.rideFetch.value instanceof Object && this.props.rideFetch.value.status === 'Active'){
             return(
                 <div>
@@ -103,7 +103,7 @@ class Complete extends Component {
 
 }
 
-export default connect(props => ({
-    rideFetch: {url:`${config.backendURL}/rides/edit/${props.match.params.id}`, refreshInterval: 5000},
-    rideCount: {url:`${config.backendURL}/rides/count`, refreshInterval: 5000}
+export default connect(props => ({/*Refreshes data every 1000ms (1s). Higher than this causes issues*/
+    rideFetch: {url:`${config.backendURL}/rides/edit/${props.match.params.id}`, refreshInterval: 1000},
+    rideCount: {url:`${config.backendURL}/rides/count`, refreshInterval: 1000}
 }))(Complete)

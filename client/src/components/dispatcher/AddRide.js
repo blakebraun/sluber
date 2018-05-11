@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import RideService from './RideService';
-import {Link} from 'react-router-dom';
-let locations = require('../../locations');
+let locations = require('../../locations'); /*Current list of SLU Ride pickup/dropoff locations*/
 
 class AddRide extends Component {
 
@@ -10,7 +9,7 @@ class AddRide extends Component {
 
         let now = Date.now();
 
-        this.state = {pickupLoc:"Adorjan Hall", dropoffLoc:"Adorjan Hall", received:now, riders: "1", status: "Active"};
+        this.state = {pickupLoc:"Adorjan Hall", dropoffLoc:"Adorjan Hall", received:now, riders: "1", status: "Active"}; /*Necessary for default input values to be entered if selected*/
         this.addRideService = new RideService();
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -19,7 +18,7 @@ class AddRide extends Component {
         this.populateLocations = this.populateLocations.bind(this);
     }
 
-    validateForm() {
+    validateForm() { /*Validates that banner is in format 00xxxxxxx, phone is in 10 digit format, email address is valid, and pickup & dropoff locations are not the same*/
         let bannerPattern = new RegExp("00[0-9]{7}");
         let phonePattern = new RegExp("[0-9]{10}");
         let emailPattern = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
@@ -37,7 +36,7 @@ class AddRide extends Component {
             return false;
         }
         else if(this.state.pickupLoc === this.state.dropoffLoc){
-            alert("Pickup and dropoff locations may not be the same.")
+            alert("Pickup and dropoff locations may not be the same.");
             return false;
         }
         else{
@@ -45,7 +44,7 @@ class AddRide extends Component {
         }
     }
 
-    populateLocations() {
+    populateLocations() { /*populates dropdown menu of pickup/dropoff locations, making the categories non-selectable*/
         return locations.map(function(location, i){
             if(location[0] === "Frost Campus" || location[0] === "Medical Campus" || location[0] === "Off Campus" || location[0] === "Intersections"){
                 return <option value={location[0]} key={i} disabled>{location[0]}</option>;
@@ -56,7 +55,7 @@ class AddRide extends Component {
         })
     }
 
-    handleInputChange(event) {
+    handleInputChange(event) { /*Sets state of each input based on current value*/
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
@@ -64,11 +63,11 @@ class AddRide extends Component {
         this.setState({[name]: value});
     }
 
-    handleSubmit(event) {
+    handleSubmit(event) { /*Adds data to the database, closes modal, and refreshes page*/
         event.preventDefault();
         if(this.validateForm()) {
             this.addRideService.sendData(this.state);
-            this.props.close();
+            this.props.close(); /*passed in from DispatcherIndex to close the modal*/
             window.location.reload();
         }
     }

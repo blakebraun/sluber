@@ -309,3 +309,8 @@ hr {
     min-width:175px;
 }
 
+.map{
+    position:relative;
+    left: 10px;
+    width: 95%;
+}

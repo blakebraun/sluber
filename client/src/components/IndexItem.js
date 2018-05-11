@@ -15,7 +15,7 @@ class IndexItem extends Component {
         this.getRideCount = this.getRideCount.bind(this);
     }
 
-    getRideCount(){
+    getRideCount(){/*Gets number of rides in db and returns to homepage*/
        // if(this.props.ridesFetch.value instanceof Number){
             return(this.props.ridesFetch.value);
        // }

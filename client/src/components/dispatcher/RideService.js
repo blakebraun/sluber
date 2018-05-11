@@ -3,7 +3,7 @@ let config = require('../../config');
 
 class RideService{
 
-    sendData(data) {
+    sendData(data) { /*add ride to database*/
         axios.post(config.backendURL + '/rides/add/post',{
                 name:data.name,
                 riders: data.riders,
@@ -19,7 +19,7 @@ class RideService{
         .catch(err => console.log(err))
     }
 
-    updateData(data, id){
+    updateData(data, id){/*update existing ride in the database*/
         axios.post(config.backendURL + '/rides/update/'+id, {
             name:data.name,
             riders: data.riders,
@@ -37,7 +37,7 @@ class RideService{
         .catch(err => console.log(err))
     }
 	
-	deleteData(id){
+	deleteData(id){/*delete existing ride*/
 	    axios.get(config.backendURL + '/rides/delete/'+id)
 	    .then().catch(err => console.log(err))
 	  }

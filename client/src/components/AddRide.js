@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
 import RideService from './RideService';
 import {Link} from 'react-router-dom';
-import Start from './add-ride/start';
-import Riders from './add-ride/Riders';
 import {geolocated, geoPropTypes} from 'react-geolocated';
 
+/*Used for Google Maps / location tracking*/
 let locations = require('../locations');
 let GoogleMapsLoader = require('google-maps');
 const geolocation = require ('google-geolocation') ({
     key: 'AIzaSyA-fssqTd74LzLLZwA7YrCXbqOY0s_74DY'
 });
-var myMap;
+let myMap;
 
 class AddRide extends Component {
 
@@ -20,7 +19,7 @@ class AddRide extends Component {
         let now = Date.now();
 
         this.state = {pickupLoc:"Adorjan Hall", dropoffLoc:"Adorjan Hall", received:now, riders:"1", advice:"Use My Location",
-        lat: 38.634804, long: -90.233378, status: "Active", screen: "start"};
+        lat: 38.634804, long: -90.233378, status: "Active", screen: "start"};/*needed for default form values*/
         this.addRideService = new RideService();
         this.geoOptions = {
             enableHighAccuracy: true,
@@ -36,22 +35,18 @@ class AddRide extends Component {
         this.findClosest = this.findClosest.bind(this);
         this.validateForm = this.validateForm.bind(this);
         this.populateLocations = this.populateLocations.bind(this);
-        this.changeScreen = this.changeScreen.bind(this);
         this.setId = this.setId.bind(this);
         this.addRideService.sendData = this.addRideService.sendData.bind(this);
     }
 
-    componentWillMount(){
+    componentWillMount(){/*Removable. Used just for testing*/
         alert("NOTICE: This site is for demo purposes only! SLU Ride does not monitor requests from this site.");
     }
 
-    changeScreen(newScreen){
-        this.setState({screen:newScreen});
-    }
-
-    setId(id){
+    setId(id){/*used in RideService to return the id of the ride once it is entered in the database, allowing us to redirect to Complete*/
         this.props.history.push('/complete/' + id);
     }
+
 // Validation is used to make sure user cannot enter certain characters. Various fields and their forbidden characters are here.
     validateForm() {
         let bannerPattern = new RegExp("00[0-9]{7}");
@@ -80,7 +75,7 @@ class AddRide extends Component {
         }
     }
 
-    populateLocations() {
+    populateLocations() {/*Populates dropdowns with SLU Ride's pickup/dropoff locations*/
         return locations.map(function(location, i){
             if(location[0] === "Frost Campus" || location[0] === "Medical Campus" || location[0] === "Off Campus" || location[0] === "Intersections"){
                 return <option value={location[0]} key={i} disabled>{location[0]}</option>;
@@ -91,15 +86,15 @@ class AddRide extends Component {
         })
     }
 
-    handleInputChange(event) {
+    handleInputChange(event) {/*Update inputs when values are changed*/
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const fieldName = target.name;
 
         this.setState({[fieldName]: value});
     }
-// From the HTML code, the user puts all their information into this.state and with handleSubmit it will send the data to the Database.
-    handleSubmit(event) {
+
+    handleSubmit(event) {/*Validates form & adds to DB*/
         event.preventDefault();
         if(this.validateForm()) {
             let newRide = this.addRideService.sendData(this.state);
@@ -208,13 +203,6 @@ class AddRide extends Component {
                     this.setState({advice: newText});
                 }
 
-        //meaningless code used for push
-        let myNum = 4;
-        myNum += myNum;
-        if (myNum < 9){
-            myNum += myNum;
-        }
-
         /* code for using google maps geolocation (wifi & cell towers)
 
                 const params = {
@@ -246,13 +234,13 @@ class AddRide extends Component {
 
     }
 
-    initMap() {
+    initMap() { /*Show the map on the screen*/
         //we only want the init to run once
         if (this.init === true) {
 
             let lat = this.state.lat;
             let long = this.state.long;
-            var marker;
+            let marker;
 
             GoogleMapsLoader.onLoad(function (google) {
                 console.log('I just loaded google maps api');
@@ -316,7 +304,7 @@ class AddRide extends Component {
                         <input type = "button" className = "button" value = {this.state.advice} onClick = {this.handleGeolocate} />
                         <br />
                         <br />
-                        <div className = "map" id = "map"></div>
+                        <div className="map" id = "map"></div>
                         <script type="text/javascript">
                             function codeAddress(){
                             this.initMap()};

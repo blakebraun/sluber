@@ -7,12 +7,12 @@ let config = require('./config');
 let port = config.expressPort;
 
 mongoose.Promise = require('bluebird');
-mongoose.connect(config.mongoURL);
+mongoose.connect(config.mongoURL); /*library for connecting to Mongo*/
 
 let loginRouter = require('./src/routes/loginRouter');
-let rideRouter = require('./src/routes/rideRouter');
+let rideRouter = require('./src/routes/rideRouter');/*Routes specified for ride DB actions*/
 
-app.use(cors());
+app.use(cors()); /*Cross-origin enabled*/
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 

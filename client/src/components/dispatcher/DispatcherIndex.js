@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import RideService from './RideService';
-import axios from 'axios';
 import TableRow from './TableRow';
-import {Link} from 'react-router-dom';
-import {connect, PromiseState} from 'react-refetch';
+import {connect} from 'react-refetch';
 import Modal from 'react-modal';
 import AddRide from './AddRide';
 let config = require('../../config');
@@ -19,12 +17,11 @@ class DispatcherIndex extends Component {
         };
         this.addRideService = new RideService();
         this.openModal = this.openModal.bind(this);
-        this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.toggleModal = this.toggleModal.bind(this)
     }
 
-    tabRow(){
+    tabRow(){ /*Maps all rides from database to a TableRow object (TableRow.js)*/
        if(this.props.ridesFetch.value instanceof Array){
            return this.props.ridesFetch.value.map(function (object, i) {
                return <TableRow obj={object} key={i}/>;
@@ -32,11 +29,9 @@ class DispatcherIndex extends Component {
        }
     }
 
+    /*functions used by Modal npm module to track state of open/close*/
     openModal() {
         this.setState({modalIsOpen: true});
-    }
-
-    afterOpenModal(){
     }
 
     closeModal() {
@@ -57,7 +52,6 @@ class DispatcherIndex extends Component {
                     <button onClick={this.toggleModal} className="add-button" style={{color: 'white', textDecoration:'none'}}>Add Ride</button>
                    <Modal
                         isOpen={this.state.modalIsOpen}
-                        onAfterOpen={this.afterOpenModal}
                         onRequestClose={this.closeModal}
                         contentLabel="Add Ride"
                         className={{
@@ -98,7 +92,7 @@ class DispatcherIndex extends Component {
     }
 }
 
-export default connect(props => ({
-    ridesFetch: {url:`${config.backendURL}/rides/`, refreshInterval: 5000}
+export default connect(props => ({/*Refreshes data every 1000 ms (1s), higher than this results in occasional errors*/
+    ridesFetch: {url:`${config.backendURL}/rides/`, refreshInterval: 1000}
 }))(DispatcherIndex)
 

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
 import RideService from './RideService';
 import Modal from 'react-modal';
 let locations = require('../../locations');
@@ -17,7 +16,6 @@ class TableRow extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validateForm = this.validateForm.bind(this);
         this.openModal = this.openModal.bind(this);
-        this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.dispatchRide = this.dispatchRide.bind(this);
@@ -25,7 +23,7 @@ class TableRow extends Component {
         this.completeRide = this.completeRide.bind(this);
         this.sendUpdate = this.sendUpdate.bind(this);
 
-        this.state = {
+        this.state = {/*Needed to fill in values passed in from DispatcherIndex map function*/
             name: this.props.obj.name,
             riders: this.props.obj.riders,
             banner: this.props.obj.banner,
@@ -42,7 +40,7 @@ class TableRow extends Component {
         };
     }
 
-    handleDelete(event) {
+    handleDelete(event) { /*Confirms deletion before actually deleting ride*/
         event.preventDefault();
         let del = window.confirm("Are you sure you want to delete this ride?");
         if(del){
@@ -52,7 +50,7 @@ class TableRow extends Component {
         }
     }
 
-    formatTime(){
+    formatTime(){/*Used for time ride was entered. MM/DD HH:MM (am/pm)*/
         let received = new Date(this.props.obj.received);
         let month = received.getMonth() + 1;
         let day = received.getDate();
@@ -78,7 +76,7 @@ class TableRow extends Component {
         return(<div>{month + "/" + day + " " + hours + ":" + minutes + " " + m}</div>);
     }
 
-    handleInputChange(event){
+    handleInputChange(event){/*Used for input changes*/
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
@@ -86,7 +84,7 @@ class TableRow extends Component {
         this.setState({[name]: value});
     }
 
-    populateLocations() {
+    populateLocations() {/*Fills in SLU Ride's locations for editing*/
         return locations.map(function(location, i){
             if(location[0] === "Frost Campus" || location[0] === "Medical Campus" || location[0] === "Off Campus" || location[0] === "Intersections"){
                 return <option value={location[0]} key={i} disabled>{location[0]}</option>;
@@ -97,7 +95,7 @@ class TableRow extends Component {
         })
     }
 
-    toggleEdit() {
+    toggleEdit() {/*Used so that we can have inline editing of rides*/
         if(this.state.edit){
             this.setState({
                 name: this.props.obj.name,
@@ -116,18 +114,18 @@ class TableRow extends Component {
         this.setState({edit: !this.state.edit});
     }
 
-    sendUpdate(){
+    sendUpdate(){ /*Used for dispatch, pickup, and complete functions*/
         this.addRideService.updateData(this.state, this.props.obj._id);
         window.location.reload();
     }
 
-    dispatchRide(){
+    dispatchRide(){ /*marks as dispatched, sends update to DB, therefore updating client*/
         let unit = prompt("Which unit are you dispatching to this ride? (800, 815, 816, or 817)");
         let allUnits = ["800", "815", "816", "817"];
-        if(allUnits.indexOf(unit) !== -1) {
+        if(allUnits.indexOf(unit) !== -1) {/*Only allow user to pick from the four specified units*/
             this.setState({status: "Dispatched", dispatched: unit}, this.sendUpdate);
         }
-        else if(unit === null){
+        else if(unit === null){/*Needed for cancel*/
             return;
         }
         else{
@@ -135,7 +133,7 @@ class TableRow extends Component {
         }
     }
 
-    pickupRide(){
+    pickupRide(){/*Marks as in progress, adds pickup time, and sends update to DB, updating client*/
         let now = new Date;
         let hours = now.getHours();
         let minutes = now.getMinutes();
@@ -158,7 +156,7 @@ class TableRow extends Component {
         this.setState({status: "In Progress", pickupTime: time}, this.sendUpdate);
     }
 
-    completeRide(){
+    completeRide(){/*Marks as completed, records dropoff time, and updates DB, updating client*/
         let now = new Date;
         let hours = now.getHours();
         let minutes = now.getMinutes();
@@ -181,7 +179,7 @@ class TableRow extends Component {
         this.setState({status: "Complete", dropoffTime: time}, this.sendUpdate);
     }
 
-    handleSubmit(event) {
+    handleSubmit(event) {/*used for inline editing submit. Updates db, tggles off editing, and refreshses page*/
         event.preventDefault();
         if(this.validateForm()) {
             this.addRideService.updateData(this.state, this.props.obj._id);
@@ -190,11 +188,10 @@ class TableRow extends Component {
         }
     }
 
-    validateForm() {
+    validateForm() {/*Ensures everything is in appropriate format*/
         let bannerPattern = new RegExp("00[0-9]{7}");
         let phonePattern = new RegExp("[0-9]{10}");
         let emailPattern = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
-        let dispatchedPattern = new RegExp("[0-9]{3}");
 
         if(!bannerPattern.test(this.state.banner)){
             alert("Please enter a valid banner ID.");
@@ -217,11 +214,9 @@ class TableRow extends Component {
         }
     }
 
+    /*Helper functions for npm Modal tracking open/close state. Used for viewing ride info.*/
     openModal() {
         this.setState({modalIsOpen: true});
-    }
-
-    afterOpenModal(){
     }
 
     closeModal() {
@@ -233,7 +228,7 @@ class TableRow extends Component {
     }
 
     render(){
-        if(!this.state.edit) {
+        if(!this.state.edit) {/*Not in edit mode, just show ride details / action dropdown.*/
             return (
                 <tr className>
                     <td className="rides-table-cell">{this.props.obj.status}</td>
@@ -261,7 +256,6 @@ class TableRow extends Component {
                     <div>
                         <Modal
                             isOpen={this.state.modalIsOpen}
-                            onAfterOpen={this.afterOpenModal}
                             onRequestClose={this.closeModal}
                             contentLabel="Details"
                             className={{
@@ -330,7 +324,7 @@ class TableRow extends Component {
                 </tr>
             );
         }
-        else{
+        else{/*Currently editing ride. Change to text inputs/dropdowns and allow user to update*/
             return(
                 <tr>
                     <td className="rides-table-cell">
