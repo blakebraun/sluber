@@ -8,7 +8,7 @@ Running Instructions:
 
 4. cd into the backend folder and run 'npm start'.
 
-5. cd into the dispatcher folder and run 'npm start'. The dispatcher application should open in your browser on localhost:3000. Do the same for the client folder. This will run on localhost:3001.
+5. cd into the client folder and run 'npm start'. The client application should open in your browser on localhost:3000. The dispatcher application will be accessible at localhost:3000/dispatcherß
 
 6. All systems should now be communicating. All database interaction is local at this point.
 
